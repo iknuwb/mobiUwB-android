@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">MobiUwB</string>
+    <string name="menu_settings">Ustawienia</string>
+    <string name="title_activity_main">MobiUwB</string>
+    <string name="title_activity_website_choose_preference">MobiUwB</string>
+    <string name="title_activity_website_choose_preferences">MobiUwB</string>
+    <string name="title_activity_website_choose">MobiUwB</string>
+
+</resources>

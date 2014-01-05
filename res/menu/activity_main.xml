@@ -1,5 +1,14 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_settings"
-        android:title="@string/menu_settings"
-        android:orderInCategory="100" />
-</menu>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_services"
+        android:title="Serwisy MobiUwb"/>
+    <item
+        android:id="@+id/action_notifications_config"
+        android:title="Ustawienia powiadomień"/>
+    <item
+        android:id="@+id/action_exit"
+        android:title="Wyjście z Aplikacji">
+    </item>
+
+</menu> 

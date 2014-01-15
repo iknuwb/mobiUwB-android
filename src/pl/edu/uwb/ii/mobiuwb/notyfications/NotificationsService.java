@@ -1,13 +1,12 @@
 package pl.edu.uwb.ii.mobiuwb.notyfications;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import pl.edu.uwb.ii.mobiuwb.GlobalVariables;
 import pl.edu.uwb.ii.mobiuwb.LocalData;
 import pl.edu.uwb.ii.mobiuwb.R;
-import pl.edu.uwb.ii.mobiuwb.R.drawable;
 import pl.edu.uwb.ii.mobiuwb.activities.MainActivity;
+import pl.edu.uwb.ii.mobiuwb.models.JSONNotificationModel;
 import pl.za.sennajavie.ConnectionTypeChecker;
 import android.app.IntentService;
 import android.app.Notification;
@@ -15,12 +14,17 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ParseException;
 import android.support.v4.app.NotificationCompat;
 
 
 public class NotificationsService extends IntentService
 {
 	public LocalData localData;
+	public static boolean MAKE_CLOSE = false;
+	public static final String debuczus = "d";
+	
+	ConnectionTypeChecker ctc = new ConnectionTypeChecker(this);
 	
 	
 	public NotificationsService()
@@ -28,28 +32,22 @@ public class NotificationsService extends IntentService
 		super("Notifications Service");
 	}
 	
-	ConnectionTypeChecker ctc = new ConnectionTypeChecker(this);
-	
 	
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
-		
-		localData = new LocalData(this.getSharedPreferences(GlobalVariables.LOCAL_STORAGE, Context.MODE_PRIVATE));
-		
-		SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
-		
-		try
+		if(GlobalVariables.LAST_VISIT_DATE == null)
 		{
-			GlobalVariables.LAST_VISIT_DATE = sdf.parse(localData.pobierzDanaLokalna(GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE, sdf.format(Calendar.getInstance().getTime())));
+			try
+			{
+				GlobalVariables.LAST_VISIT_DATE = Calendar.getInstance().getTime();
+			}
+			catch(ParseException e)
+			{
+				e.printStackTrace();
+			}
 		}
-		catch(ParseException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		while(true)
+		while(MAKE_CLOSE == false)
 		{
 			synchronized(this)
 			{
@@ -58,7 +56,7 @@ public class NotificationsService extends IntentService
 					setNotifications();
 					try
 					{
-						wait(5000);// co godzine
+						wait(5000);
 					}
 					catch(InterruptedException e)
 					{
@@ -80,33 +78,50 @@ public class NotificationsService extends IntentService
 				
 			}
 		}
+		
+		stopSelf();
 	}
 	
 	
 	private void setNotifications()
 	{
 		PrepareNotificationData pnd = new PrepareNotificationData();
-		
 		Intent resultIntent = new Intent(this, MainActivity.class);
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(this,
 				0x34958, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-		if(!pnd.notificationsMessages.isEmpty())
+		if(!pnd.models.isEmpty())
 		{
-			for(String item : pnd.notificationsMessages)
+			for(JSONNotificationModel item : pnd.models)
 			{
-				NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
-						.setSmallIcon(R.drawable.ic_launcher).setContentText(item)
-						.setContentTitle("Nowy wpis na stronie UwB.")
-						.setContentInfo(item)
-						.setContentIntent(resultPendingIntent);
-				Notification n = mBuilder.getNotification();
 				
-				manager.notify(0x34958, n);
+				Notification noti = new NotificationCompat.Builder(getApplicationContext())
+						.setContentTitle("Nowy wpis na stronie UwB.")
+						.setContentText(item.getContent())
+						.setSmallIcon(R.drawable.ic_launcher)
+						.setAutoCancel(true)
+						.setContentIntent(resultPendingIntent)
+						.setStyle(new NotificationCompat.BigTextStyle()
+								.bigText(item.getContent()))
+						.build();
+				
+				/*
+				 * NotificationCompat.Builder mBuilder = new
+				 * NotificationCompat.Builder(getApplicationContext())
+				 * .setSmallIcon(R.drawable.ic_launcher).setContentText(item)
+				 * .setContentTitle("Nowy wpis na stronie UwB.")
+				 * .setContentInfo(item) .setContentIntent(resultPendingIntent);
+				 * Notification n = mBuilder.getNotification();
+				 */
+				
+				manager.notify((int)item.getDate().getTime(), noti);
 			}
+			
 			SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
 			
-			localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE, sdf.format(Calendar.getInstance().getTime()));
+			GlobalVariables.LAST_VISIT_DATE = Calendar.getInstance().getTime();
+			localData = new LocalData(this.getSharedPreferences(GlobalVariables.LOCAL_STORAGE, Context.MODE_PRIVATE));
+			localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE, sdf.format(GlobalVariables.LAST_VISIT_DATE));
 		}
 	}
 }

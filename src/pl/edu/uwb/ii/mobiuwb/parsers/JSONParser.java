@@ -20,27 +20,32 @@ import org.json.JSONObject;
 import pl.edu.uwb.ii.mobiuwb.models.JSONNotificationModel;
 import android.util.Log;
 
-public class JSONParser {
+
+public class JSONParser
+{
 	private static final String TAG_TITLE = "tytul";
 	private static final String TAG_CONTENT = "tresc";
 	private static final String TAG_DATE = "data";
-	private static final String ARRAY_TAG = "";
-
+	
 	private static InputStream is = null;
 	private static JSONArray jObj = null;
 	private static String json = "";
 	private static String URL;
-
+	
 	public ArrayList<JSONNotificationModel> JSONModelList;
-
-	public JSONParser(String URL) {
+	
+	
+	public JSONParser(String URL)
+	{
 		JSONParser.URL = URL;
 		JSONModelList = new ArrayList<JSONNotificationModel>();
-
+		
 		getJSONFromUrl();
 	}
-
-	public void parseJSON() {
+	
+	
+	public void parseJSON()
+	{
 		JSONArray contentArray = null;
 		JSONNotificationModel model;
 		String content;
@@ -48,71 +53,97 @@ public class JSONParser {
 		String dateText;
 		Date date = null;
 		SimpleDateFormat sdf;
-
-		try {
+		
+		try
+		{
 			contentArray = new JSONArray(jObj.toString());
-
-			for (int i = 0; i < contentArray.length(); i++) {
+			
+			for(int i = 0; i < contentArray.length(); i++)
+			{
 				JSONObject c = contentArray.getJSONObject(i);
-
+				
 				title = c.getString(TAG_TITLE);
 				content = c.getString(TAG_CONTENT);
 				dateText = c.getString(TAG_DATE);
-
+				
 				sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-				try {
+				try
+				{
 					date = sdf.parse(dateText);
-				} catch (ParseException e) {
+				}
+				catch(ParseException e)
+				{
 					e.printStackTrace();
 				}
-
-				if (title != "" && title != null) {
+				
+				if(title != "" && title != null)
+				{
 					model = new JSONNotificationModel(title, content, date);
-				} else {
+				}
+				else
+				{
 					model = new JSONNotificationModel(content, date);
 				}
 				JSONModelList.add(model);
 			}
-		} catch (JSONException e) {
+		}
+		catch(JSONException e)
+		{
 			e.printStackTrace();
 		}
 	}
-
-	private void getJSONFromUrl() {
-		try {
+	
+	
+	private void getJSONFromUrl()
+	{
+		try
+		{
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(URL);
-
+			
 			HttpResponse httpResponse = httpClient.execute(httpGet);
 			HttpEntity httpEntity = httpResponse.getEntity();
 			is = httpEntity.getContent();
-
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			
+		}
+		catch(UnsupportedEncodingException e)
+		{
 			e.printStackTrace();
 		}
-
-		try {
-
+		catch(ClientProtocolException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		try
+		{
+			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
+																				is, "iso-8859-1"), 8);
 			StringBuilder sb = new StringBuilder();
 			String line = null;
-			while ((line = reader.readLine()) != null) {
+			while((line = reader.readLine()) != null)
+			{
 				sb.append(line + "\n");
 			}
 			is.close();
 			json = sb.toString();
-		} catch (Exception e) {
+		}
+		catch(Exception e)
+		{
 			Log.e("Buffer Error", "Error converting result " + e.toString());
 		}
-
-		try {
+		
+		try
+		{
 			jObj = new JSONArray(json);
-		} catch (JSONException e) {
+		}
+		catch(JSONException e)
+		{
 			Log.e("JSON Parser", "Error parsing data " + e.toString());
 		}
 	}

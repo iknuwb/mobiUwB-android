@@ -12,16 +12,14 @@ public class PrepareNotificationData
 {
 	public static Date lastVisitDate;
 	public static Date currentVisitDate;
-	public static String jsonURL = "http://ii.uwb.edu.pl/serwis/?/json/sz"; // TODO
+	public static String jsonURL = "http://tunczyk.keep.pl/pobrane"; // TODO
 	private JSONParser jp;
-	public ArrayList<String> notificationsMessages;
+	public ArrayList<JSONNotificationModel> models;
 	
 	
 	public PrepareNotificationData()
 	{
-		lastVisitDate = GlobalVariables.LAST_VISIT_DATE;
-		currentVisitDate = new Date();
-		notificationsMessages = new ArrayList<String>();
+		models = new ArrayList<JSONNotificationModel>();
 		jp = new JSONParser(jsonURL);
 		jp.parseJSON();
 		
@@ -34,13 +32,13 @@ public class PrepareNotificationData
 		String cleanMessage;
 		for(JSONNotificationModel item : jp.JSONModelList)
 		{
-			if(item.getDate().compareTo(lastVisitDate) > 0)
+			if(item.getDate().compareTo(GlobalVariables.LAST_VISIT_DATE) > 0)
 			{
-				cleanMessage = NotyficationParser
-						.prepareTextToNotification(item.getContent());
-				notificationsMessages.add(cleanMessage);
+				cleanMessage = NotyficationParser.prepareTextToNotification(item.getContent());
+				item.setContent(cleanMessage);
+				models.add(item);
 			}
 		}
+		jp.JSONModelList.clear();
 	}
-	
 }

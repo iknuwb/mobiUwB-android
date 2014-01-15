@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +17,7 @@ import pl.edu.uwb.ii.mobiuwb.notyfications.NotificationsService;
 import pl.edu.uwb.ii.mobiuwb.parsers.XMLParser;
 import pl.za.sennajavie.FreeInternetCheckerTask;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -73,6 +73,16 @@ public class MainActivity extends ActionBarActivity
 	boolean isInternet;
 	
 	
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		// super.onSaveInstanceState(outState);
+		current.saveState(outState);
+	}
+	
+	ProgressDialog al;
+	
+	
 	/**
 	 * Jest to główna metoda tego okna Activity. Odpowiada ona za utworzenie go
 	 * i zainicjalizowanie elementów.
@@ -82,6 +92,11 @@ public class MainActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		al = new ProgressDialog(MainActivity.this);
+		al.setMessage("Ładuję ...");
+		al.show();
+		// pb = ProgressDialog.show(this.getBaseContext(), "", "Ładowanie...",
+		// true);
 		this.setTitle("MobiUwB");
 		fillWebSiteList();
 		if(!validateList())
@@ -91,9 +106,25 @@ public class MainActivity extends ActionBarActivity
 					"Jeden z linków jest niepoprawny. Proszę zedytować plik properties.xml.",
 					Toast.LENGTH_LONG).show();
 		}
-		current = (WebView)this.findViewById(R.id.mainWebView);
 		goBackButton = (Button)this.findViewById(R.id.goBackButton);
 		refreshButton = (Button)this.findViewById(R.id.RefreshButton);
+		
+		refreshButton.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				onRefreshButtonClick();
+			}
+		});
+		
+		goBackButton.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View arg0)
+			{
+				onBackButtonClick();
+			}
+		});
+		current = (WebView)findViewById(R.id.mainWebView);
 		WebSettings currentSettings = current.getSettings();
 		currentSettings.setJavaScriptEnabled(true);
 		currentSettings.setAllowFileAccess(false);
@@ -101,7 +132,8 @@ public class MainActivity extends ActionBarActivity
 		currentSettings.setLoadWithOverviewMode(true);
 		currentSettings.setUseWideViewPort(true);
 		currentSettings.setBuiltInZoomControls(false);
-		currentSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+		currentSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+		
 		current.setPersistentDrawingCache(WebView.PERSISTENT_ALL_CACHES);
 		
 		current.setWebViewClient(new WebViewClient()
@@ -113,6 +145,8 @@ public class MainActivity extends ActionBarActivity
 			public boolean shouldOverrideUrlLoading(WebView view,
 					String urlNewString)
 			{
+				// Toast.makeText(MainActivity.this, "restartuje url",
+				// Toast.LENGTH_LONG).show();
 				if(isPDF(urlNewString) && !pom)
 				{
 					urlNewString = "http://docs.google.com/gview?embedded=true&url="
@@ -130,47 +164,51 @@ public class MainActivity extends ActionBarActivity
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon)
 			{
+				
 				super.onPageStarted(view, url, favicon);
+				
 			}
 			
 			
 			@Override
 			public void onPageFinished(WebView view, String url)
 			{
+				al.dismiss();
 			}
 		});
 		
-		try
+		if(savedInstanceState != null)
 		{
-			URL startPage = new URL(webMod.getURL());
-			current.loadUrl(startPage.toString());
+			
+			((WebView)findViewById(R.id.mainWebView)).restoreState(savedInstanceState);
+			
 		}
-		catch(MalformedURLException e)
+		else
 		{
-			Toast.makeText(this,
-					"Błędny URL. Kod błędu :" + e.getLocalizedMessage(),
-					Toast.LENGTH_LONG).show();
+			try
+			{
+				URL startPage = new URL(webMod.getURL());
+				current.loadUrl(startPage.toString());
+			}
+			catch(MalformedURLException e)
+			{
+				
+				Toast.makeText(this,
+						"Błędny URL. Kod błędu :" + e.getLocalizedMessage(),
+						Toast.LENGTH_LONG).show();
+			}
 		}
-		
-		refreshButton.setOnClickListener(new OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				onRefreshButtonClick();
-			}
-		});
-		
-		goBackButton.setOnClickListener(new OnClickListener()
-		{
-			public void onClick(View arg0)
-			{
-				onBackButtonClick();
-			}
-		});
-		
 		localData = new LocalData(this.getSharedPreferences(GlobalVariables.LOCAL_STORAGE, Context.MODE_PRIVATE));
 	}
 	
+	
+	/*
+	 * private void addWebViewIfNotExists() { webViewLayout =
+	 * (RelativeLayout)findViewById(R.id.mainWebViewRelativeLayout); if(current
+	 * == null) {
+	 * 
+	 * } webViewLayout.addView(current); }
+	 */
 	
 	@Override
 	protected void onStart()
@@ -178,23 +216,7 @@ public class MainActivity extends ActionBarActivity
 		Context ctx = getApplicationContext();
 		ict = new AsyncInternetChecker(ctx);
 		ict.execute(Long.valueOf(500));
-		SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
-		
-		try
-		{
-			GlobalVariables.LAST_VISIT_DATE = sdf.parse(localData.pobierzDanaLokalna(
-					GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE,
-					sdf.format(Calendar.getInstance().getTime())
-					));
-		}
-		catch(ParseException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Intent i = new Intent(ctx, NotificationsService.class);
-		ctx.startService(i);
+		NotificationsService.MAKE_CLOSE = true;
 		super.onStart();
 	}
 	
@@ -202,11 +224,16 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	protected void onStop()
 	{
+		Context ctx = getApplicationContext();
+		al.dismiss();
 		ict.cancel(true);
-		
+		NotificationsService.MAKE_CLOSE = false;
 		SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
-		
 		localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE, sdf.format(Calendar.getInstance().getTime()));
+		
+		Intent i = new Intent(ctx, NotificationsService.class);
+		i.putExtra(NotificationsService.debuczus, "onStop");
+		ctx.startService(i);
 		super.onStop();
 	}
 	
@@ -216,7 +243,8 @@ public class MainActivity extends ActionBarActivity
 	 */
 	private void onBackButtonClick()
 	{
-		current.loadUrl(webMod.getURL());
+		// current.loadUrl(webMod.getURL());
+		current.goBack();
 	}
 	
 	
@@ -237,7 +265,7 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	protected void onResume()
 	{
-		current.loadUrl(webMod.getURL());
+		// current.loadUrl(webMod.getURL());
 		super.onResume();
 	}
 	

@@ -981,7 +981,8 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int ic_action_search=0x7f020057;
-        public static final int ic_launcher=0x7f020058;
+        public static final int ikona=0x7f020058;
+        public static final int ikona_bw=0x7f020059;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f06003c;
@@ -994,13 +995,13 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f060023;
         public static final int action_bar_title=0x7f060022;
         public static final int action_context_bar=0x7f06001d;
-        public static final int action_exit=0x7f060051;
+        public static final int action_exit=0x7f06004d;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_notifications_config=0x7f060050;
-        public static final int action_services=0x7f06004f;
-        public static final int action_settings=0x7f060053;
+        public static final int action_notifications_config=0x7f06004c;
+        public static final int action_services=0x7f06004b;
+        public static final int action_settings=0x7f06004f;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
@@ -1022,21 +1023,17 @@ containing a value of this type.
         public static final int image=0x7f060027;
         public static final int lineralal=0x7f06003e;
         public static final int listMode=0x7f060001;
-        public static final int listView1=0x7f06004e;
+        public static final int listView1=0x7f06004a;
         public static final int list_item=0x7f060029;
         public static final int mainWebView=0x7f06003d;
-        public static final int menu_settings=0x7f060052;
+        public static final int menu_settings=0x7f06004e;
         public static final int middle=0x7f060012;
         public static final int never=0x7f060009;
         public static final int none=0x7f060010;
         public static final int normal=0x7f060000;
-        public static final int notifications_connection_type_2g_check_box=0x7f060048;
-        public static final int notifications_connection_type_3g_check_box=0x7f060049;
-        public static final int notifications_connection_type_4g_check_box=0x7f06004a;
-        public static final int notifications_connection_type_LTE_check_box=0x7f06004b;
-        public static final int notifications_connection_type_Wifi_check_box=0x7f06004c;
-        public static final int notifications_connection_type_invisibable_check_box=0x7f06004d;
+        public static final int notifications_connection_type_gsm_check_box=0x7f060049;
         public static final int notifications_connection_type_text_view=0x7f060047;
+        public static final int notifications_connection_type_wifi_check_box=0x7f060048;
         public static final int notifications_interval_chooser=0x7f060046;
         public static final int notifications_interval_linear_layout=0x7f060044;
         public static final int notifications_interval_text_view=0x7f060045;

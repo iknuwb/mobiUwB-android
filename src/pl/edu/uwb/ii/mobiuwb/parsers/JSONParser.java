@@ -26,6 +26,7 @@ public class JSONParser
 	private static final String TAG_TITLE = "tytul";
 	private static final String TAG_CONTENT = "tresc";
 	private static final String TAG_DATE = "data";
+	private static final String TAG_BLAD = "blad";
 	
 	private static InputStream is = null;
 	private static JSONArray jObj = null;
@@ -57,6 +58,8 @@ public class JSONParser
 		try
 		{
 			contentArray = new JSONArray(jObj.toString());
+			
+			
 			
 			for(int i = 0; i < contentArray.length(); i++)
 			{

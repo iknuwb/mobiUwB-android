@@ -16,7 +16,7 @@
     <application
         android:name="pl.edu.uwb.ii.mobiuwb.CacheManager"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ikona"
         android:label="@string/app_name">
         
         <receiver
@@ -37,7 +37,7 @@
         <activity
             android:name="pl.edu.uwb.ii.mobiuwb.activities.MainActivity"
             android:label="MobiUwB"
-        	android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        	android:theme="@style/Theme.AppCompat"
         	android:configChanges="keyboardHidden|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,7 +72,7 @@
         <activity
             android:name="pl.edu.uwb.ii.mobiuwb.activities.NotificationsSettingsActivity"
             android:label="@string/title_activity_notifications_settings"
-        	android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        	android:theme="@style/Theme.AppCompat" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.app.Activity" />

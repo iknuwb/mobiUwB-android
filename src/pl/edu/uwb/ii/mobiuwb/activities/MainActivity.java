@@ -12,6 +12,7 @@ import java.util.Calendar;
 import pl.edu.uwb.ii.mobiuwb.GlobalVariables;
 import pl.edu.uwb.ii.mobiuwb.LocalData;
 import pl.edu.uwb.ii.mobiuwb.R;
+import pl.edu.uwb.ii.mobiuwb.models.NotyficationsSettingsModel;
 import pl.edu.uwb.ii.mobiuwb.models.WebsiteModel;
 import pl.edu.uwb.ii.mobiuwb.notyfications.NotificationsService;
 import pl.edu.uwb.ii.mobiuwb.parsers.XMLParser;
@@ -93,6 +94,7 @@ public class MainActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		al = new ProgressDialog(MainActivity.this);
+		
 		al.setMessage("Ładuję ...");
 		al.show();
 		// pb = ProgressDialog.show(this.getBaseContext(), "", "Ładowanie...",
@@ -199,6 +201,16 @@ public class MainActivity extends ActionBarActivity
 			}
 		}
 		localData = new LocalData(this.getSharedPreferences(GlobalVariables.LOCAL_STORAGE, Context.MODE_PRIVATE));
+		
+		restoreNotificationsSettings();
+	}
+	
+	
+	@Override
+	protected void onDestroy()
+	{
+		storeNotificationsSettings();
+		super.onDestroy();
 	}
 	
 	
@@ -215,7 +227,7 @@ public class MainActivity extends ActionBarActivity
 	{
 		Context ctx = getApplicationContext();
 		ict = new AsyncInternetChecker(ctx);
-		ict.execute(Long.valueOf(500));
+		ict.execute(Long.valueOf(1000));
 		NotificationsService.MAKE_CLOSE = true;
 		super.onStart();
 	}
@@ -232,7 +244,6 @@ public class MainActivity extends ActionBarActivity
 		localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE, sdf.format(Calendar.getInstance().getTime()));
 		
 		Intent i = new Intent(ctx, NotificationsService.class);
-		i.putExtra(NotificationsService.debuczus, "onStop");
 		ctx.startService(i);
 		super.onStop();
 	}
@@ -352,6 +363,27 @@ public class MainActivity extends ActionBarActivity
 	}
 	
 	
+	private void restoreNotificationsSettings()
+	{
+		boolean onOf = Boolean.parseBoolean(localData.pobierzDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_ON_OF_CHECKBOX, "true"));
+		TypeConnectionCheck tcc = TypeConnectionCheck.valueOf(localData.pobierzDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_CONNECTION, "WIFI"));
+		Long time = Long.valueOf(localData.pobierzDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_TIME_INTERVAL_SPINNER, Long.valueOf(60000).toString()));
+		
+		NotificationsSettingsActivity.nsm = new NotyficationsSettingsModel();
+		NotificationsSettingsActivity.nsm.setTypeConnectionChech(tcc);
+		NotificationsSettingsActivity.nsm.setNotificationTurnedOn(onOf);
+		NotificationsSettingsActivity.nsm.setNotificationTimeInterwal(time);
+	}
+	
+	
+	private void storeNotificationsSettings()
+	{
+		localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_ON_OF_CHECKBOX, NotificationsSettingsActivity.nsm.isNotificationTurnedOn() + "");
+		localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_CONNECTION, NotificationsSettingsActivity.nsm.getTypeConnectionChech().toString());
+		localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_TIME_INTERVAL_SPINNER, NotificationsSettingsActivity.nsm.getNotificationTimeInterwal().toString());
+	}
+	
+	
 	/**
 	 * Jest to metoda odpowiedzialna za wypełnianie listy stron WWW w programie.
 	 */
@@ -378,7 +410,7 @@ public class MainActivity extends ActionBarActivity
 		}
 		if(content == "")
 		{
-			Toast.makeText(this, "B��d odczytu pliku.", Toast.LENGTH_LONG)
+			Toast.makeText(this, "Błąd odczytu pliku.", Toast.LENGTH_LONG)
 					.show();
 		}
 		else

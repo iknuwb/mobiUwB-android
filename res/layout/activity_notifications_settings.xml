@@ -77,57 +77,21 @@
             android:weightSum="3" >
 
             <CheckBox
-                android:id="@+id/notifications_connection_type_2g_check_box"
+                android:id="@+id/notifications_connection_type_wifi_check_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2G" />
+                android:checked="true"
+                android:text="WiFi" />
 
             <CheckBox
-                android:id="@+id/notifications_connection_type_3g_check_box"
+                android:id="@+id/notifications_connection_type_gsm_check_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="3G" />
-
-            <CheckBox
-                android:id="@+id/notifications_connection_type_4g_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="4G" />
+                android:text="GSM" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="3" >
-
-            <CheckBox
-                android:id="@+id/notifications_connection_type_LTE_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="LTE" />
-
-            <CheckBox
-                android:id="@+id/notifications_connection_type_Wifi_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Wifi" />
-
-            <CheckBox
-                android:id="@+id/notifications_connection_type_invisibable_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Wifi" 
-                android:visibility="invisible"/>
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

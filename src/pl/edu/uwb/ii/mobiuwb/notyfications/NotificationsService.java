@@ -6,6 +6,7 @@ import pl.edu.uwb.ii.mobiuwb.GlobalVariables;
 import pl.edu.uwb.ii.mobiuwb.LocalData;
 import pl.edu.uwb.ii.mobiuwb.R;
 import pl.edu.uwb.ii.mobiuwb.activities.MainActivity;
+import pl.edu.uwb.ii.mobiuwb.activities.NotificationsSettingsActivity;
 import pl.edu.uwb.ii.mobiuwb.models.JSONNotificationModel;
 import pl.za.sennajavie.ConnectionTypeChecker;
 import android.app.IntentService;
@@ -22,7 +23,6 @@ public class NotificationsService extends IntentService
 {
 	public LocalData localData;
 	public static boolean MAKE_CLOSE = false;
-	public static final String debuczus = "d";
 	
 	ConnectionTypeChecker ctc = new ConnectionTypeChecker(this);
 	
@@ -47,6 +47,32 @@ public class NotificationsService extends IntentService
 				e.printStackTrace();
 			}
 		}
+		
+		switch (NotificationsSettingsActivity.nsm.getTypeConnectionChech())
+		{
+			case BOTH:
+			{
+				checkBoth();
+				break;
+			}
+			case GSM:
+			{
+				checkGsm();
+				break;
+			}
+			case WIFI:
+			{
+				checkWifi();
+				break;
+			}
+		}
+		
+		stopSelf();
+	}
+	
+	
+	private void checkBoth()
+	{
 		while(MAKE_CLOSE == false)
 		{
 			synchronized(this)
@@ -56,7 +82,7 @@ public class NotificationsService extends IntentService
 					setNotifications();
 					try
 					{
-						wait(5000);
+						wait(NotificationsSettingsActivity.nsm.getNotificationTimeInterwal());
 					}
 					catch(InterruptedException e)
 					{
@@ -78,8 +104,78 @@ public class NotificationsService extends IntentService
 				
 			}
 		}
-		
-		stopSelf();
+	}
+	
+	
+	private void checkWifi()
+	{
+		while(MAKE_CLOSE == false)
+		{
+			synchronized(this)
+			{
+				if(ctc.freeInternetCheckByWiFi() == true)
+				{
+					setNotifications();
+					try
+					{
+						wait(NotificationsSettingsActivity.nsm.getNotificationTimeInterwal());
+					}
+					catch(InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				else
+				{
+					try
+					{
+						wait(5000); // jak nie trafisz neta w danej godzinie to
+									// probuj ponownie co x czasu
+					}
+					catch(InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		}
+	}
+	
+	
+	private void checkGsm()
+	{
+		while(MAKE_CLOSE == false)
+		{
+			synchronized(this)
+			{
+				if(ctc.freeInternetCheckByGsm() == true)
+				{
+					setNotifications();
+					try
+					{
+						wait(NotificationsSettingsActivity.nsm.getNotificationTimeInterwal());
+					}
+					catch(InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				else
+				{
+					try
+					{
+						wait(5000); // jak nie trafisz neta w danej godzinie to
+									// probuj ponownie co x czasu
+					}
+					catch(InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		}
 	}
 	
 	
@@ -98,7 +194,7 @@ public class NotificationsService extends IntentService
 				Notification noti = new NotificationCompat.Builder(getApplicationContext())
 						.setContentTitle("Nowy wpis na stronie UwB.")
 						.setContentText(item.getContent())
-						.setSmallIcon(R.drawable.ic_launcher)
+						.setSmallIcon(R.drawable.ikona_bw)
 						.setAutoCancel(true)
 						.setContentIntent(resultPendingIntent)
 						.setStyle(new NotificationCompat.BigTextStyle()

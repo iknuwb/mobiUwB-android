@@ -981,8 +981,9 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int ic_action_search=0x7f020057;
-        public static final int ikona=0x7f020058;
-        public static final int ikona_bw=0x7f020059;
+        public static final int ic_launcher=0x7f020058;
+        public static final int ikona=0x7f020059;
+        public static final int ikona_bw=0x7f02005a;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f06003c;
@@ -1172,7 +1173,14 @@ containing a value of this type.
         public static final int action_settings=0x7f0b0014;
         public static final int app_name=0x7f0b000d;
         public static final int hello_world=0x7f0b0015;
+        public static final int menu_item1=0x7f0b001a;
+        public static final int menu_item2=0x7f0b001b;
+        public static final int menu_item3=0x7f0b001c;
         public static final int menu_settings=0x7f0b000e;
+        public static final int notification_interval_item1=0x7f0b0016;
+        public static final int notification_interval_item2=0x7f0b0017;
+        public static final int notification_interval_item3=0x7f0b0018;
+        public static final int read_file_error=0x7f0b0019;
         public static final int title_activity_main=0x7f0b000f;
         public static final int title_activity_notifications_settings=0x7f0b0013;
         public static final int title_activity_website_choose=0x7f0b0012;
@@ -2414,7 +2422,7 @@ containing a value of this type.
          */
         public static final int[] MenuView = {
             0x010100ae, 0x0101012c, 0x0101012d, 0x0101012e,
-            0x0101012f, 0x01010130, 0x01010131, 0x0101041a
+            0x0101012f, 0x01010130, 0x01010131, 0x010103ea
         };
         /**
           <p>

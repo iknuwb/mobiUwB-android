@@ -58,9 +58,6 @@ public class JSONParser
 		try
 		{
 			contentArray = new JSONArray(jObj.toString());
-			
-			
-			
 			for(int i = 0; i < contentArray.length(); i++)
 			{
 				JSONObject c = contentArray.getJSONObject(i);
@@ -105,6 +102,11 @@ public class JSONParser
 			HttpGet httpGet = new HttpGet(URL);
 			
 			HttpResponse httpResponse = httpClient.execute(httpGet);
+			if(httpResponse.getStatusLine().getStatusCode() >= 400)
+			{
+				Log.d("DEBUG", "wszedłem do sprawdzania 404");
+				return;
+			}
 			HttpEntity httpEntity = httpResponse.getEntity();
 			is = httpEntity.getContent();
 			

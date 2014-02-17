@@ -109,11 +109,10 @@ public class NotificationsSettingsActivity extends ActionBarActivity
 	
 	private ArrayList<NotificationIntervalModel> fillIntervalList()
 	{
-		// TODO do strings.xml
 		ArrayList<NotificationIntervalModel> temp = new ArrayList<NotificationIntervalModel>();
-		temp.add(new NotificationIntervalModel("15 min.", 900000));
-		temp.add(new NotificationIntervalModel("1 godz.", 3600000));
-		temp.add(new NotificationIntervalModel("5 godz.", 18000000));
+		temp.add(new NotificationIntervalModel(getResources().getString(R.string.notification_interval_item1), 900000));
+		temp.add(new NotificationIntervalModel(getResources().getString(R.string.notification_interval_item2), 3600000));
+		temp.add(new NotificationIntervalModel(getResources().getString(R.string.notification_interval_item3), 18000000));
 		return temp;
 	}
 	

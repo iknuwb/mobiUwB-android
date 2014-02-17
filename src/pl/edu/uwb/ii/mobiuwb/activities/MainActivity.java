@@ -9,6 +9,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import org.apache.http.cookie.Cookie;
 import pl.edu.uwb.ii.mobiuwb.GlobalVariables;
 import pl.edu.uwb.ii.mobiuwb.LocalData;
 import pl.edu.uwb.ii.mobiuwb.R;
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -31,6 +33,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -41,7 +45,7 @@ import android.widget.Toast;
 @SuppressLint("SetJavaScriptEnabled")
 public class MainActivity extends ActionBarActivity
 {
-	LocalData localData;
+	public static LocalData localData;
 	FreeInternetCheckerTask ict;
 	private static long back_pressed;
 	
@@ -82,8 +86,8 @@ public class MainActivity extends ActionBarActivity
 	}
 	
 	ProgressDialog al;
-	
-	
+	CookieSyncManager cookieSyncManager;
+	CookieManager cookieManager;
 	/**
 	 * Jest to główna metoda tego okna Activity. Odpowiada ona za utworzenie go
 	 * i zainicjalizowanie elementów.
@@ -110,6 +114,7 @@ public class MainActivity extends ActionBarActivity
 		}
 		goBackButton = (Button)this.findViewById(R.id.goBackButton);
 		refreshButton = (Button)this.findViewById(R.id.RefreshButton);
+
 		
 		refreshButton.setOnClickListener(new OnClickListener()
 		{
@@ -127,6 +132,15 @@ public class MainActivity extends ActionBarActivity
 			}
 		});
 		current = (WebView)findViewById(R.id.mainWebView);
+		
+		cookieSyncManager = CookieSyncManager.createInstance(current.getContext());
+		cookieManager = CookieManager.getInstance();
+		
+		cookieManager.setAcceptCookie(true); 
+		cookieManager.setCookie(webMod.getPingURL(),"client=Android;");
+		cookieSyncManager.sync();
+		
+		current.setBackgroundColor(Color.BLACK);
 		WebSettings currentSettings = current.getSettings();
 		currentSettings.setJavaScriptEnabled(true);
 		currentSettings.setAllowFileAccess(false);
@@ -134,6 +148,7 @@ public class MainActivity extends ActionBarActivity
 		currentSettings.setLoadWithOverviewMode(true);
 		currentSettings.setUseWideViewPort(true);
 		currentSettings.setBuiltInZoomControls(false);
+		currentSettings.setAppCacheEnabled(true);
 		currentSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 		
 		current.setPersistentDrawingCache(WebView.PERSISTENT_ALL_CACHES);
@@ -147,8 +162,6 @@ public class MainActivity extends ActionBarActivity
 			public boolean shouldOverrideUrlLoading(WebView view,
 					String urlNewString)
 			{
-				// Toast.makeText(MainActivity.this, "restartuje url",
-				// Toast.LENGTH_LONG).show();
 				if(isPDF(urlNewString) && !pom)
 				{
 					urlNewString = "http://docs.google.com/gview?embedded=true&url="
@@ -166,9 +179,7 @@ public class MainActivity extends ActionBarActivity
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon)
 			{
-				
 				super.onPageStarted(view, url, favicon);
-				
 			}
 			
 			
@@ -176,6 +187,17 @@ public class MainActivity extends ActionBarActivity
 			public void onPageFinished(WebView view, String url)
 			{
 				al.dismiss();
+			}
+			
+			
+			@Override
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+			{
+				if(errorCode == 404)
+				{
+					
+				}
+				super.onReceivedError(view, errorCode, description, failingUrl);
 			}
 		});
 		
@@ -189,7 +211,7 @@ public class MainActivity extends ActionBarActivity
 		{
 			try
 			{
-				URL startPage = new URL(webMod.getURL());
+				URL startPage = new URL(webMod.getPingURL());
 				current.loadUrl(startPage.toString());
 			}
 			catch(MalformedURLException e)
@@ -265,6 +287,7 @@ public class MainActivity extends ActionBarActivity
 	private void onRefreshButtonClick()
 	{
 		String url = current.getUrl();
+		al.show();
 		current.loadUrl(url);
 	}
 	
@@ -363,16 +386,19 @@ public class MainActivity extends ActionBarActivity
 	}
 	
 	
-	private void restoreNotificationsSettings()
+	public static void restoreNotificationsSettings()
 	{
 		boolean onOf = Boolean.parseBoolean(localData.pobierzDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_ON_OF_CHECKBOX, "true"));
 		TypeConnectionCheck tcc = TypeConnectionCheck.valueOf(localData.pobierzDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_CONNECTION, "WIFI"));
 		Long time = Long.valueOf(localData.pobierzDanaLokalna(GlobalVariables.LOCAL_STORE_NOTIFICATION_SETTINGS_TIME_INTERVAL_SPINNER, Long.valueOf(60000).toString()));
 		
-		NotificationsSettingsActivity.nsm = new NotyficationsSettingsModel();
-		NotificationsSettingsActivity.nsm.setTypeConnectionChech(tcc);
-		NotificationsSettingsActivity.nsm.setNotificationTurnedOn(onOf);
-		NotificationsSettingsActivity.nsm.setNotificationTimeInterwal(time);
+		if(NotificationsSettingsActivity.nsm == null)
+		{
+			NotificationsSettingsActivity.nsm = new NotyficationsSettingsModel();
+			NotificationsSettingsActivity.nsm.setTypeConnectionChech(tcc);
+			NotificationsSettingsActivity.nsm.setNotificationTurnedOn(onOf);
+			NotificationsSettingsActivity.nsm.setNotificationTimeInterwal(time);
+		}
 	}
 	
 	
@@ -410,7 +436,7 @@ public class MainActivity extends ActionBarActivity
 		}
 		if(content == "")
 		{
-			Toast.makeText(this, "Błąd odczytu pliku.", Toast.LENGTH_LONG)
+			Toast.makeText(this, getResources().getString(R.string.read_file_error), Toast.LENGTH_LONG)
 					.show();
 		}
 		else

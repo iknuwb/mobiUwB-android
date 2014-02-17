@@ -12,7 +12,7 @@ public class PrepareNotificationData
 {
 	public static Date lastVisitDate;
 	public static Date currentVisitDate;
-	public static String jsonURL = "http://tunczyk.keep.pl/pobrane"; // TODO
+	public static String jsonURL = "http://ii.uwb.edu.pl/serwis/?/json/sz"; // TODO
 	private JSONParser jp;
 	public ArrayList<JSONNotificationModel> models;
 	

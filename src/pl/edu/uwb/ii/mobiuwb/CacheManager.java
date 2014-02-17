@@ -16,8 +16,7 @@ public class CacheManager extends Application
 	{
 		
 		// Check if the external storage is writeable
-		if(Environment.MEDIA_MOUNTED.equals(Environment
-				.getExternalStorageState()))
+		if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
 		{
 			// Retrieve the base path for the application in the external
 			// storage

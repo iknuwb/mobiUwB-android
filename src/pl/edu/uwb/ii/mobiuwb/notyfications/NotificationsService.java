@@ -15,13 +15,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ParseException;
 import android.support.v4.app.NotificationCompat;
 
 
 public class NotificationsService extends IntentService
 {
-	public LocalData localData;
 	public static boolean MAKE_CLOSE = false;
 	
 	ConnectionTypeChecker ctc = new ConnectionTypeChecker(this);
@@ -36,6 +36,10 @@ public class NotificationsService extends IntentService
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
+		SharedPreferences sh = this.getSharedPreferences(GlobalVariables.LOCAL_STORAGE, Context.MODE_PRIVATE);
+		MainActivity.localData = new LocalData(sh);
+		MainActivity.restoreNotificationsSettings();
+		
 		if(GlobalVariables.LAST_VISIT_DATE == null)
 		{
 			try
@@ -216,8 +220,7 @@ public class NotificationsService extends IntentService
 			SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getDateInstance();
 			
 			GlobalVariables.LAST_VISIT_DATE = Calendar.getInstance().getTime();
-			localData = new LocalData(this.getSharedPreferences(GlobalVariables.LOCAL_STORAGE, Context.MODE_PRIVATE));
-			localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE, sdf.format(GlobalVariables.LAST_VISIT_DATE));
+			MainActivity.localData.zapiszDanaLokalna(GlobalVariables.LOCAL_STORE_LAST_VISIT_DATE, sdf.format(GlobalVariables.LAST_VISIT_DATE));
 		}
 	}
 }

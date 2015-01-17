@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Websites>
-    <DefaultWebsite 
-	    URL="http://ii.uwb.edu.pl/m/android.php"
-	    Ping="http://ii.uwb.edu.pl/m/glowna.php"
-	    Name ="Instytut Informatyki"  
-    />
-	<Website 
-	    URL="http://ii.uwb.edu.pl/m/android.php"
-	    Ping="http://ii.uwb.edu.pl/m/glowna.php"
-	    Name ="Instytut Informatyki"
-    />
+	<DefaultWebsite 
+	    Name="Instytut Informatyki" 
+	    URL="http://ii.uwb.edu.pl/m/glowna.php"
+	    Ping="http://ii.uwb.edu.pl/m/glowna.php" />
+	<Website  
+	    Name="Instytut Informatyki" 
+	    URL="http://ii.uwb.edu.pl/m/glowna.php"
+	    Ping="http://ii.uwb.edu.pl/m/glowna.php"/>
+	<Website  
+	    Name="Instytut Informatyki2" 
+	    URL="http://ii.uwb.edu.pl/m/glowna.php"
+	    Ping="http://ii.uwb.edu.pl/m/glowna.php"/>
 </Websites>

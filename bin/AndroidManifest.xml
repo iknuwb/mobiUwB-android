@@ -1,44 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.edu.uwb.ii.mobiuwb"
+    package="com.example.mobiuwb"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-        <!--android:theme="@style/AppTheme"-->
+ 	<uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    
     <application
-        android:name="pl.edu.uwb.ii.mobiuwb.CacheManager"
         android:allowBackup="true"
         android:icon="@drawable/ikona"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseTheme" 
+        android:name="com.example.mobiuwb.MobiUwbApp">
         
-        <receiver
-            android:name="pl.edu.uwb.ii.mobiuwb.AutoStart"
-            android:enabled="true"
-            android:exported="true"
-            android:label="AutoStart" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="pl.edu.uwb.ii.mobiuwb.notyfications.NotificationsService"
-            android:label="Notifications Service" >
-        </service>
-
         <activity
-            android:name="pl.edu.uwb.ii.mobiuwb.activities.MainActivity"
-            android:label="MobiUwB"
-        	android:theme="@style/Theme.AppCompat"
-        	android:configChanges="keyboardHidden|orientation">
+            android:name="com.example.mobiuwb.view.splash.SplashScreen"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,35 +32,10 @@
         </activity>
         
         <activity
-            android:name="pl.edu.uwb.ii.mobiuwb.WebsiteChoosePreference"
-            android:label="@string/title_activity_website_choose_preference">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.preference.PreferenceActivity" />
-        </activity>    
-            
-        <activity
-            android:name="pl.edu.uwb.ii.mobiuwb.WebsiteChoosePreferences"
-            android:label="@string/title_activity_website_choose_preferences">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.preference.PreferenceActivity" />
-        </activity>
-        
-        <activity
-            android:name="pl.edu.uwb.ii.mobiuwb.activities.WebsiteChooseActivity"
-            android:label="@string/title_activity_website_choose">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.Activity" />
-        </activity>
-        <activity
-            android:name="pl.edu.uwb.ii.mobiuwb.activities.NotificationsSettingsActivity"
-            android:label="@string/title_activity_notifications_settings"
-        	android:theme="@style/Theme.AppCompat" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.Activity" />
+            android:name="com.example.mobiuwb.view.mainactivity.MainActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+        	android:theme="@style/AppBaseTheme"  >
         </activity>
     </application>
 

@@ -1,12 +1,14 @@
 package pl.edu.uwb.mobiuwb.services.notification.dataInitialize.tasks.versionController;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.io.File;
 
 import pl.edu.uwb.mobiuwb.VersionControl.Models.VersioningRequest;
 import pl.edu.uwb.mobiuwb.VersionControl.Models.VersioningResult;
 import pl.edu.uwb.mobiuwb.VersionControl.VersionController;
+import pl.edu.uwb.mobiuwb.services.notification.ServicePreferencesManager;
 import pl.edu.uwb.mobiuwb.services.notification.dataInitialize.DataInitializeTaskOutput;
 import pl.edu.uwb.mobiuwb.tasks.Task;
 import pl.edu.uwb.mobiuwb.tasks.models.TaskInput;
@@ -16,6 +18,7 @@ import pl.edu.uwb.mobiuwb.tasks.models.TaskInput;
  */
 public class VersionControllerTask implements Task<DataInitializeTaskOutput>
 {
+    public static final String SHARED_PREFERENCES_SERVICE_NAME = "sharedPrefsService";
     @Override
     public void execute(TaskInput input, DataInitializeTaskOutput output)
     {
@@ -30,7 +33,12 @@ public class VersionControllerTask implements Task<DataInitializeTaskOutput>
                 output.propertiesXmlResult.getXmlPropertiesRootElement().getConfigurationFilePath(),
                 configurationFile.getAbsolutePath());
 
-        VersionController versionController = new VersionController();
+        SharedPreferences shareds = baseContext.getSharedPreferences(
+                SHARED_PREFERENCES_SERVICE_NAME,
+                Context.MODE_PRIVATE);
+
+        VersionController versionController = new VersionController(shareds);
+
         VersioningResult versioningResult = versionController.getNewestFile(versioningRequest);
 
         output.addErrors(versioningResult.getErrorMessages());

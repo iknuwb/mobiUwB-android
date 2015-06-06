@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.IBinder;
@@ -237,8 +238,7 @@ public class NotificationService extends Service
 
                     ServicePreferencesManager servicePreferencesManager =
                             ServicePreferencesManager.getInstance(
-                                    getBaseContext(),
-                                    section.id);
+                                    getBaseContext());
 
                     servicePreferencesManager.setLastKnownDate(
                             unit.getName(),
@@ -253,7 +253,11 @@ public class NotificationService extends Service
         {
             List<Feed> notificationElements = new ArrayList<Feed>();
 
-            VersionController versionController = new VersionController();
+            SharedPreferences shareds = getSharedPreferences(
+                    VersionControllerTask.SHARED_PREFERENCES_SERVICE_NAME,
+                    Context.MODE_PRIVATE);
+
+            VersionController versionController = new VersionController(shareds);
             String feedsFileUri = unit.getApiUrl() + section.id;
 
             Context baseContext = getBaseContext();
@@ -277,12 +281,13 @@ public class NotificationService extends Service
 
                 JsonParser jsonParser = new JsonParser();
                 ServicePreferencesManager servicePreferencesManager =
-                        ServicePreferencesManager.getInstance(getBaseContext(), unit.getName());
+                        ServicePreferencesManager.getInstance(getBaseContext());
                 try
                 {
                     notificationElements = jsonParser.parseFeedsJson(jsonContent);
 
-                    Date lastKnownDate = servicePreferencesManager.getLastKnownDate(section.id);
+                    Date lastKnownDate = servicePreferencesManager.getLastKnownDate(unit.getName(),
+                                                                                    section.id);
 
 
                     for(Feed feed : notificationElements)

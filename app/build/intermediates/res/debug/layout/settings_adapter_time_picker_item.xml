@@ -46,4 +46,4 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black"/>
-</LinearLayout><!-- From: file:/C:/programowanie/AndroidStudioProjects/MobiUwBNowy/app/src/main/res/layout/settings_adapter_time_picker_item.xml -->
+</LinearLayout><!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/layout/settings_adapter_time_picker_item.xml -->

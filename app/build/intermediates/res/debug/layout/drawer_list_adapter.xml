@@ -22,4 +22,4 @@
         android:id="@+id/drawer_list_adapter_textview"
         />
 </LinearLayout>
-<!-- From: file:/C:/programowanie/AndroidStudioProjects/MobiUwBNowy/app/src/main/res/layout/drawer_list_adapter.xml -->
+<!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/layout/drawer_list_adapter.xml -->

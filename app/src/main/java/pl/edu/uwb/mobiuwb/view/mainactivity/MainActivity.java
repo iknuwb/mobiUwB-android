@@ -237,7 +237,6 @@ public class MainActivity extends Activity implements GuiAccess
     private void initInternetChecker()
     {
         internetCheckingService = new InternetCheckingService();
-        //TODO sprawdzić czy istnieje w splash :)
         if(StartupConfig.isMobileAvailable())
         {
             internetCheckingService.setMobileInternetChecker(new MobileChecker());
@@ -357,22 +356,18 @@ public class MainActivity extends Activity implements GuiAccess
                             }
                             catch (IOException e)
                             {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                             catch (ParserConfigurationException e)
                             {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                             catch (SAXException e)
                             {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                             catch (TransformerException e)
                             {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                             DrawerListMethods.onItemSelected(mdl);
@@ -482,7 +477,6 @@ public class MainActivity extends Activity implements GuiAccess
             {
                 case SETTINGS_ACTIVITY_RESULT:
                 {
-                    //TODO restore preferences
                     readSettings();
                     break;
                 }

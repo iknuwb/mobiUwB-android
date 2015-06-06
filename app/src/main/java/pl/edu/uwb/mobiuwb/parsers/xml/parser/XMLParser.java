@@ -69,7 +69,7 @@ public class XMLParser
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory
                 .newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        org.w3c.dom.Document doc = dBuilder.parse(XMLFileSource);
+        Document doc = dBuilder.parse(XMLFileSource);
         doc.getDocumentElement().normalize();
         return doc;
     }
@@ -101,7 +101,7 @@ public class XMLParser
      * Pobiera ona strony i zapisuje je do określonego modelu
      * przechowywania stron (WebsiteModel).
      *
-     * @throws IOException                  //TODO
+     * @throws IOException
      * @throws ParserConfigurationException
      * @throws SAXException
      */
@@ -183,7 +183,8 @@ public class XMLParser
             throws
             IOException,
             ParserConfigurationException,
-            SAXException
+            SAXException,
+            NullPointerException
     {
         ConfigXmlResult result = new ConfigXmlResult();
 

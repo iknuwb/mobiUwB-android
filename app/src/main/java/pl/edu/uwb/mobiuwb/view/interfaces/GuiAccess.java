@@ -5,7 +5,6 @@ import android.content.Intent;
 
 public interface GuiAccess
 {
-    //TODO do wywalenia
     void finishActivity();
 
     void refreshWebView();

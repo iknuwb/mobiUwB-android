@@ -17,6 +17,7 @@ import pl.edu.uwb.mobiuwb.utillities.SharedPreferencesKeyring;
 import pl.edu.uwb.mobiuwb.parsers.xml.parser.ConfigXmlResult;
 import pl.edu.uwb.mobiuwb.parsers.xml.parser.XMLParser;
 import pl.edu.uwb.mobiuwb.parsers.xml.parser.result.model.PropertiesXmlResult;
+import pl.edu.uwb.mobiuwb.view.settings.SettingsPreferencesManager;
 
 import org.xml.sax.SAXException;
 
@@ -131,7 +132,10 @@ public class StartupConfig
         Context appContext = MobiUwbApp.getContext();
 
 
-        VersionController versionController = new VersionController();
+        VersionController versionController = new VersionController(
+                appContext.getSharedPreferences(
+                        SettingsPreferencesManager.SHARED_PREFERENCES_NAME,
+                        Context.MODE_PRIVATE));
 
         File file = new File(
                 appContext.getFilesDir().getPath(),
@@ -144,14 +148,17 @@ public class StartupConfig
         VersioningResult versioningResult =
                 versionController.getNewestFile(
                         versioningRequest);
+
         if(versioningResult.getSucceeded())
         {
             return versioningResult.getFileContent();
         }
         else
         {
-            //TODO coś jak false ...
-            return "";
+            //TODO nie ma tu pliku konfiguracyjnego a jesteśmy w startupie, czyli aplikacja nie ma na czym działać
+            //chodzi o przypadek - wyczyscilem dane, ale nie ma neta aby pobrac nowy plik.
+
+            return null;
         }
     }
 

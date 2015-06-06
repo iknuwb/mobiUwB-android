@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import pl.edu.uwb.mobiuwb.parsers.json.parser.JsonParser;
+import pl.edu.uwb.mobiuwb.view.settings.SettingsPreferencesManager;
 
 /**
  * Created by sennajavie on 2015-06-04.
@@ -21,15 +22,14 @@ public class ServicePreferencesManager
     private SharedPreferences preferences;
 
     private static ServicePreferencesManager instance;
-    public static ServicePreferencesManager getInstance(Context context,
-                                                        String sharedPreferencesName)
+    public static ServicePreferencesManager getInstance(Context context)
     {
         if (instance == null)
         {
             instance = new ServicePreferencesManager();
         }
         instance.context = context;
-        SHARED_PREFERENCES_NAME = sharedPreferencesName;
+        SHARED_PREFERENCES_NAME = SettingsPreferencesManager.SHARED_PREFERENCES_NAME;
         instance.preferences = context.getSharedPreferences(
                 SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return instance;
@@ -39,12 +39,16 @@ public class ServicePreferencesManager
     {
     }
 
-    public Date getLastKnownDate(String categoryId)
+    public Date getLastKnownDate(String universityUnitName, String sectionId)
     {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(JsonParser.DATE_FORMAT);
         Date defaultDate = new Date();
         String formattedDefaultDate = simpleDateFormat.format(defaultDate);
-        String unformattedDate = preferences.getString(categoryId, formattedDefaultDate);
+        String unformattedDate = preferences.getString(
+                concatLastKnownDateId(
+                        universityUnitName,
+                        sectionId),
+                formattedDefaultDate);
         Date date = null;
         try
         {
@@ -58,10 +62,19 @@ public class ServicePreferencesManager
         return date;
     }
 
-    public void setLastKnownDate(String universityUnitName, String categoryId, Date date)
+    private String concatLastKnownDateId(String universityUnitName, String sectionId)
+    {
+        return universityUnitName + '_' + sectionId;
+    }
+
+    public void setLastKnownDate(String universityUnitName, String sectionId, Date date)
     {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(categoryId, date.toString());
+        editor.putString(
+                concatLastKnownDateId(
+                    universityUnitName,
+                    sectionId),
+                date.toString());
         editor.commit();
     }
 }

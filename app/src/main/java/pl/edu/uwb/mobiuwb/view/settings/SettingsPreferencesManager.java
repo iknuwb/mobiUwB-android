@@ -96,9 +96,6 @@ public class SettingsPreferencesManager
 
         editor.putInt(SETTINGS_SHARED_FREQUENCY_CHOSEN_VALUE, frequency.getValue());
 
-        //TODO typ połączenia
-        //editor.putInt(SETTINGS_SHARED_CONNECTION_TYPE_CHOSEN_VALUE, connectionType.getValue());
-
         editor.putBoolean(SETTINGS_SHARED_ANNOUCEMENTS_ACTIVE, announcements.isExpanded());
 
         editor.putBoolean(SETTINGS_SHARED_ANNOUCEMENTS_TIME_RANGE_ACTIVE, timeRange.isExpanded());
@@ -189,45 +186,6 @@ public class SettingsPreferencesManager
         announcements
                 .setExpanded(preferences.getBoolean(SETTINGS_SHARED_ANNOUCEMENTS_ACTIVE, true));
         list.add(announcements);
-    }
-
-    private void createConnectionTypeItemModel()
-    {
-        String[] list = context.getResources().getStringArray(R.array.connection_types);
-
-        List<ConnectionListModel> models = CreateModelsByEnum(list);
-
-        connectionTypeSimpleDialog =
-                new ListDialog(
-                        new ConnectionListAdapter(
-                                context,
-                                models));
-
-        connectionTypeSimpleDialog.setOnValueChangedListener(
-                onConnectionSimpleDialogValueChangeListener);
-        connectionType = new ListPickerItemModel(connectionTypeSimpleDialog);
-        connectionType
-                .setValue(preferences.getInt(SETTINGS_SHARED_CONNECTION_TYPE_CHOSEN_VALUE, 0));
-        connectionType.setText(context.getString(R.string.settings_category_connection_type));
-        connectionType.setTitle(context.getString(R.string.settings_category_connection_type));
-        this.list.add(connectionType);
-    }
-
-    private List<ConnectionListModel> CreateModelsByEnum(String[] list)
-    {
-        //TODO internet checker
-        /*
-        List<ConnectionListModel> models = new ArrayList<ConnectionListModel>();
-        for (CheckingType checkingType : CheckingType.values())
-        {
-            String displayText = list[checkingType.getValue()];
-            boolean available = checkingType.isAvailable();
-            ConnectionListModel model = new ConnectionListModel(displayText,available);
-            models.add(model);
-        }
-        return models;
-        */
-        return null;
     }
 
     OnValueChangedListener<Integer> onConnectionSimpleDialogValueChangeListener =

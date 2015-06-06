@@ -26,15 +26,7 @@ public class ConfigurationXmlTask implements Task<DataInitializeTaskOutput>
             output.configXmlResult =
                     xmlParser.deserializeConfigurationXml(fileContent);
         }
-        catch (IOException e)
-        {
-            output.addError(e.getMessage());
-        }
-        catch (ParserConfigurationException e)
-        {
-            output.addError(e.getMessage());
-        }
-        catch (SAXException e)
+        catch (Exception e)
         {
             output.addError(e.getMessage());
         }

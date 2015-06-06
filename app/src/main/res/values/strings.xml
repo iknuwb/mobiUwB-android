@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MobiUwB</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_contact">Kontakt</string>
+    <string name="action_about">"O programie"</string>
+    <string name="action_exit">Wyjście</string>
+
+
+    <string name="drawer_title" formated="false">"Uniwersytet\nw\nBiałymstoku"</string>
+
+    <string name="error_too_many_default_sections">"Jest więcej niż jedna domyślna strona WWW."</string>
+    <string name="error_not_existing_default_section">"Nie podano domyślnej strony WWW."</string>
+    <string name="error_sections_not_exists">"Nie podano stron WWW wydziałów."</string>
+    <string name="error_configuariuon_file_not_set">"Nie ustawiono pliku konfiguracyjnego."</string>
+
+
+    <string name="dialog_load_webiste_message">"Ładuję ..."</string>
+    <string name="dialog_load_webiste_title">"Proszę czekać."</string>
+
+
+    <string name="toast_press_again_to_close">"Wcisnij ponownie aby wyjść!"</string>
+
+
+    <string name="title_activity_settings">Ustawienia</string>
+
+    <string name="settings_category_connection_type">Typ połączenia</string>
+    <string name="settings_category_annoucements">Powiadomienia</string>
+    <string name="settings_subcategory_frequency">Częstotliwość</string>
+    <string name="settings_subcategory_time_range">Zakres godzinowy</string>
+    <string name="settings_subsubcategory_from">Od</string>
+    <string name="settings_subsubcategory_to">Do</string>
+
+
+
+    <string name="about_activity_title">O programie</string>
+    <string name="about_authors_title">Autorzy</string>
+    <string name="about_license_title">Licencja</string>
+    <string name="about_license_content">Program na licencji MIT.</string>
+    <string name="about_thanks_title">Podziękowania</string>
+    <string name="about_thanks_content">Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukowego UwB oraz dyrekcji Instytutu Informatyki.</string>
+
+
+
+    <string name="contact_activity_title">Kontakt</string>
+    <string name="contact_map_element_text">Lokalizacja</string>
+
+    <string name="notification_content_text">"Nowych: "</string>
+
+    <string name="internet_checker_mobile_active">Korzystasz z MOBILE</string>
+    <string name="internet_checker_wifi_active">Korzystasz z WIFI</string>
+    <string name="internet_checker_connection_lost">Utracono połączenie z internetem</string>
+    <string name="internet_checker_connection_received">Odzyskano połączenie z internetem</string>
+    <string name="navigation_drawer_open">Otwórz</string>
+    <string name="navigation_drawer_close">Zamknij</string>
+</resources>

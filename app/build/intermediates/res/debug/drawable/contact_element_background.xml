@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners
+        android:radius="10dp"/>
+    <solid
+        android:color="@color/contact_element_background" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/black"/>
+</shape>
+<!-- From: file:/C:/programowanie/AndroidStudioProjects/MobiUwBNowy/app/src/main/res/drawable/contact_element_background.xml -->

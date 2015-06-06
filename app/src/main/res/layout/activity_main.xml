@@ -1,0 +1,59 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_main_background"
+    tools:context="pl.edu.uwb.mobiuwb.view.mainactivity.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/fragment_container_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/drawer_linearlayout"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="left">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:background="@color/drawer_logo_container_background">
+
+            <ImageView
+                android:layout_width="84dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:src="@drawable/logouwb"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:lines="3"
+                android:text="@string/drawer_title"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/drawer_separator"
+            android:layout_height="2dp"/>
+
+        <ListView
+            android:id="@+id/drawer_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/drawer_listview_background"
+            android:choiceMode="singleChoice"/>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>

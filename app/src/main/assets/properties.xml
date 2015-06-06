@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Properties>
+    <Configuration
+        File="http://ii.uwb.edu.pl/mobi/config.xml"/>
+
+    <Websites>
+        <DefaultWebsite
+            Name="Instytut Informatyki"
+            URL="http://ii.uwb.edu.pl/mobi/?place=ii&amp;client=android"
+            Ping="http://ii.uwb.edu.pl/mobi/?place=ii&amp;client=android"/>
+        <Website
+            Name="Instytut Informatyki"
+            URL="http://ii.uwb.edu.pl/mobi/?place=ii&amp;client=android"
+            Ping="http://ii.uwb.edu.pl/mobi/?place=ii&amp;client=android"/>
+        <Website
+            Name="Wydział Filologiczny"
+            URL="http://ii.uwb.edu.pl/mobi/?place=wf&amp;client=android"
+            Ping="http://ii.uwb.edu.pl/mobi/?place=wf&amp;client=android"/>
+    </Websites>
+</Properties>

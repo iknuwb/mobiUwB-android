@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/blue_separator_top_bottom_margin"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="@dimen/blue_separator_top_bottom_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_authors_title"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/blue_separator_height"
+                android:layout_marginTop="@dimen/blue_separator_top_bottom_margin"
+                android:layout_marginBottom="@dimen/blue_separator_top_bottom_margin"
+                android:background="@color/about_separator"/>
+
+            <ListView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/authors_list_view"
+                android:dividerHeight="0dp"
+                android:listSelector="@android:color/transparent"
+                android:divider="@null"
+                android:cacheColorHint="@android:color/transparent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@string/about_license_title"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/blue_separator_height"
+                android:layout_marginTop="@dimen/blue_separator_top_bottom_margin"
+                android:layout_marginBottom="@dimen/blue_separator_top_bottom_margin"
+                android:background="@color/about_separator"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:padding="@dimen/contact_element_padding"
+                android:background="@drawable/contact_element_background"
+                android:layout_marginTop="@dimen/contact_element_margin_top_bottom"
+                android:layout_marginBottom="@dimen/contact_element_margin_top_bottom">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_action_policeman_hat"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="100">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textSize="@dimen/contact_font_size"
+                        android:text="@string/about_license_content"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@string/about_thanks_title"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/blue_separator_height"
+                android:layout_marginTop="@dimen/blue_separator_top_bottom_margin"
+                android:layout_marginBottom="@dimen/blue_separator_top_bottom_margin"
+                android:background="@color/about_separator"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:padding="@dimen/contact_element_padding"
+                android:background="@drawable/contact_element_background"
+                android:layout_marginTop="@dimen/contact_element_margin_top_bottom"
+                android:layout_marginBottom="@dimen/contact_element_margin_top_bottom">
+
+                <RelativeLayout
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_action_handshake"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="100">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textSize="@dimen/contact_font_size"
+                        android:text="@string/about_thanks_content"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

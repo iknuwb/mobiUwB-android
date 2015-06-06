@@ -1,0 +1,9 @@
+<resources>
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@color/custom_theme_background</item>
+    </style>
+
+    <style name="NoTitleBar" parent="android:Theme.Holo.NoActionBar">
+        <item name="android:windowBackground">@color/custom_theme_background</item>
+    </style>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="drawer_listview_background">#FFFFFF</color>
+    <color name="drawer_separator">#616161</color>
+    <color name="drawer_logo_container_background">#9E9E9E</color>
+    <color name="drawer_listview_item_selected_background">#EEEEEE</color>
+
+    <color name="splash_screen_background">#252525</color>
+
+    <color name="activity_main_background">#252525</color>
+
+    <color name="custom_theme_background">#252525</color>
+
+    <color name="about_separator">@android:color/holo_blue_light</color>
+
+    <color name="contact_element_background">#303030</color>
+
+    <color name="blue">#0000ff</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+</resources>

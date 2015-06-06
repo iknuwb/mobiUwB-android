@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="pl.edu.uwb.mobiuwb"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14"/>
+
+    <uses-permission
+        android:name="android.permission.INTERNET"/>
+    <uses-permission
+        android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <application
+        android:name="pl.edu.uwb.mobiuwb.MobiUwbApp"
+        android:allowBackup="true"
+        android:icon="@drawable/ikona"
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseTheme">
+
+        <activity
+            android:name="pl.edu.uwb.mobiuwb.view.splash.SplashScreen"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:theme="@style/NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="pl.edu.uwb.mobiuwb.view.mainactivity.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name="pl.edu.uwb.mobiuwb.view.settings.SettingsActivity"
+            android:label="@string/title_activity_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.edu.uwb.mobiuwb.view.mainactivity.MainActivity"/>
+        </activity>
+
+        <activity
+            android:name="pl.edu.uwb.mobiuwb.view.about.AboutActivity"
+            android:label="@string/about_activity_title">
+        </activity>
+
+        <activity
+            android:name="pl.edu.uwb.mobiuwb.view.contact.ContactActivity"
+            android:label="@string/contact_activity_title">
+        </activity>
+
+        <service android:name=".services.notification.NotificationService">
+
+        </service>
+
+        <receiver android:name=".broadcast.DeviceLaunchedBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+</manifest>

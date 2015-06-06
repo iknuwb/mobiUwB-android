@@ -37,7 +37,7 @@ import pl.edu.uwb.mobiuwb.services.notification.dataInitialize.tasks.sharedPrefe
 import pl.edu.uwb.mobiuwb.services.notification.dataInitialize.tasks.versionController.VersionControllerTask;
 import pl.edu.uwb.mobiuwb.services.notification.dataInitialize.tasks.versionController.VersionControllerTaskInput;
 import pl.edu.uwb.mobiuwb.tasks.TasksQueue;
-import pl.edu.uwb.mobiuwb.view.splash.SplashScreen;
+import pl.edu.uwb.mobiuwb.view.splash.SplashScreenActivity;
 
 /**
  * Created by sennajavie on 2015-06-01.
@@ -54,7 +54,15 @@ public class NotificationService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        int flag = intent.getIntExtra(ServiceManager.REQUEST_FLAG, -1);
+        int flag;
+        if(intent == null)
+        {
+            flag = RESTART;
+        }
+        else
+        {
+            flag = intent.getIntExtra(ServiceManager.REQUEST_FLAG, -1);
+        }
         parseRequest(flag);
         return Service.START_STICKY;
     }
@@ -368,7 +376,7 @@ public class NotificationService extends Service
 
 
 
-                Intent resultIntent = new Intent(baseContext, SplashScreen.class);
+                Intent resultIntent = new Intent(baseContext, SplashScreenActivity.class);
 
                 PendingIntent notifyPendingIntent =
                         PendingIntent.getActivity(

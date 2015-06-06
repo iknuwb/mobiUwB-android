@@ -109,8 +109,13 @@ public class VersionController
     {
         URL obj = new URL(versioningRequest.getInternetFile());
         URLConnection conn = obj.openConnection();
+
         String internetFileModificationDateString =
                 conn.getHeaderField("Last-Modified");
+        if(internetFileModificationDateString == null)
+        {
+            return new Date(0);
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));

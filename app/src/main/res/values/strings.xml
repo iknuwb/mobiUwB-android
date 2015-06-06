@@ -58,4 +58,9 @@
     <string name="internet_checker_connection_received">Odzyskano połączenie z internetem</string>
     <string name="navigation_drawer_open">Otwórz</string>
     <string name="navigation_drawer_close">Zamknij</string>
+    <string name="title_activity_something_wrong">SomethingWrong</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="something_wrong_activity_error_description">Nie wykryto połączenia z Internetem, prosimy spróbować ponownie.</string>
+    <string name="something_wrong_activity_refresh_button_text">Odśwież</string>
 </resources>

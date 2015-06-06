@@ -11,21 +11,30 @@ import pl.edu.uwb.mobiuwb.R;
 import pl.edu.uwb.mobiuwb.configuration.ConfigureEvents;
 import pl.edu.uwb.mobiuwb.configuration.StartupConfig;
 import pl.edu.uwb.mobiuwb.view.mainactivity.MainActivity;
+import pl.edu.uwb.mobiuwb.view.somethingWrong.SomethingWrongActivity;
 
-public class SplashScreen extends Activity implements ConfigureEvents
+public class SplashScreenActivity extends Activity implements ConfigureEvents
 {
     private Thread splashIntervalThread;
     private boolean doubleClickStop = false;
     private static long backPressedTime;
     private SharedPreferences prefs = null;
     private boolean configurationFinished;
+    private boolean breakThread = false;
+
+    private void stopThread()
+    {
+        synchronized (this)
+        {
+            breakThread = true;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
         splashIntervalThread = new Thread()
         {
             public void run()
@@ -35,10 +44,16 @@ public class SplashScreen extends Activity implements ConfigureEvents
                     long current = System.currentTimeMillis();
                     while (true)
                     {
+                        if(breakThread)
+                        {
+                            int i =0;
+                            return;
+                        }
                         if (System.currentTimeMillis() >= current + 1500)
                         {
                             if (configurationFinished)
                             {
+                                int i =0;
                                 break;
                             }
                         }
@@ -46,6 +61,7 @@ public class SplashScreen extends Activity implements ConfigureEvents
                         {
                             if (doubleClickStop == true)
                             {
+                                int i =0;
                                 return;
                             }
                         }
@@ -55,7 +71,7 @@ public class SplashScreen extends Activity implements ConfigureEvents
                 {
                     e.printStackTrace();
                 }
-                final Intent intent = new Intent(SplashScreen.this,
+                final Intent intent = new Intent(SplashScreenActivity.this,
                                                  MainActivity.class);
                 startActivity(intent);
             }
@@ -74,9 +90,22 @@ public class SplashScreen extends Activity implements ConfigureEvents
     }
 
 
-    @Override public void onConfigurationFinished()
+    @Override public void onConfigurationFinished(boolean succeeded)
     {
-        configurationFinished = true;
+        if(succeeded == true)
+        {
+            configurationFinished = true;
+        }
+        else
+        {
+            stopThread();
+            Intent intent = new Intent(
+                    SplashScreenActivity.this,
+                    SomethingWrongActivity.class);
+
+            //intent.addFlags(Intent.)
+            startActivity(intent);
+        }
     }
 
     @Override

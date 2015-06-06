@@ -76,7 +76,7 @@ public class StartupConfig
         this.configureEvents = configureEvents;
     }
 
-    private class StartupAsyncTask extends AsyncTask<Void, Void, Void>
+    private class StartupAsyncTask extends AsyncTask<Void, Void, Boolean>
     {
         private boolean firstAppStart;
         public StartupAsyncTask(boolean firstAppStart)
@@ -87,32 +87,40 @@ public class StartupConfig
         @Override
         protected void onPreExecute()
         {
-
             super.onPreExecute();
         }
 
         @Override
-        protected Void doInBackground(Void... params)
+        protected Boolean doInBackground(Void... params)
         {
-            if(firstAppStart)
+            try
             {
-                copyPropertiesFileIntoInternalStorage();
-                prefs.edit().putBoolean(SharedPreferencesKeyring.APP_FIRST_RUN,
-                                        false).apply();
+                if (firstAppStart)
+                {
+                    copyPropertiesFileIntoInternalStorage();
+                    prefs.edit().putBoolean(
+                            SharedPreferencesKeyring.APP_FIRST_RUN,
+                            false)
+                    .apply();
+                }
+                determineNetworks();
+                executePropertiesParser();
+                String downloadedFileContent = downloadConfigurationFileIntoInternalStorage();
+                executeConfigurationParser(downloadedFileContent);
+                return true;
             }
-            determineNetworks();
-            executePropertiesParser();
-            String downloadedFileContent = downloadConfigurationFileIntoInternalStorage();
-            executeConfigurationParser(downloadedFileContent);
-            return null;
+            catch(Exception e)
+            {
+                return false;
+            }
         }
 
         @Override
-        protected void onPostExecute(Void result)
+        protected void onPostExecute(Boolean result)
         {
             if (configureEvents != null)
             {
-                configureEvents.onConfigurationFinished();
+                configureEvents.onConfigurationFinished(result);
             }
             super.onPostExecute(result);
         }

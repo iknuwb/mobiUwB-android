@@ -77,6 +77,7 @@
     <string name="error_not_existing_default_section">"Nie podano domyślnej strony WWW."</string>
     <string name="error_sections_not_exists">"Nie podano stron WWW wydziałów."</string>
     <string name="error_too_many_default_sections">"Jest więcej niż jedna domyślna strona WWW."</string>
+    <string name="hello_world">Hello world!</string>
     <string name="internet_checker_connection_lost">Utracono połączenie z internetem</string>
     <string name="internet_checker_connection_received">Odzyskano połączenie z internetem</string>
     <string name="internet_checker_mobile_active">Korzystasz z MOBILE</string>
@@ -90,7 +91,10 @@
     <string name="settings_subcategory_time_range">Zakres godzinowy</string>
     <string name="settings_subsubcategory_from">Od</string>
     <string name="settings_subsubcategory_to">Do</string>
+    <string name="something_wrong_activity_error_description">Nie wykryto połączenia z Internetem, prosimy spróbować ponownie.</string>
+    <string name="something_wrong_activity_refresh_button_text">Odśwież</string>
     <string name="title_activity_settings">Ustawienia</string>
+    <string name="title_activity_something_wrong">SomethingWrong</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>

@@ -13,7 +13,6 @@ public class ConfigXmlResult
     private UniversityUnit currentUniversityUnit;
     public UniversityUnit getCurrentUniversityUnit()
     {
-        //return currentUniversityUnit;
         return universityUnits.get(0);
     }
 
@@ -25,19 +24,4 @@ public class ConfigXmlResult
         this.universityUnits = new ArrayList<UniversityUnit>();
         this.authors = new ArrayList<String>();
     }
-
-    public UniversityUnit getUnitBy(Website website)
-    {
-        for (UniversityUnit universityUnit : universityUnits)
-        {
-            //if(universityUnit.)
-        }
-        return null;
-    }
-
-    /*public void initCurrentUniversityUnit()
-    {
-        currentUniversityUnit = getUnitBy(
-                StartupConfig.propertiesXmlResult.getXmlPropertiesRootElement().getDefaultWebsite());
-    }*/
 }

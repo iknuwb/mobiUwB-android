@@ -16,6 +16,7 @@ public class Coordinates
     }
 
     private String longtitude;
+
     public String getLongtitude()
     {
         return longtitude;

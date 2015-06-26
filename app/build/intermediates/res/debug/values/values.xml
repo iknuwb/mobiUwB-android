@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/values/arrays.xml -->
+    <!-- From: file:/C:/Users/Tunczyk/Documents/Programowanie/Android/Android%20Studio/mobiUwB-android/app/src/main/res/values/arrays.xml -->
     <eat-comment/>
     <string-array name="connection_types">
         <item>WiFi</item>
@@ -27,7 +27,7 @@
         <item>43200000</item>
         <item>86400000</item>
     </integer-array>
-    <!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/C:/Users/Tunczyk/Documents/Programowanie/Android/Android%20Studio/mobiUwB-android/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="about_separator">@android:color/holo_blue_light</color>
     <color name="activity_main_background">#252525</color>
@@ -43,7 +43,7 @@
     <color name="red">#ff0000</color>
     <color name="splash_screen_background">#252525</color>
     <color name="white">#ffffff</color>
-    <!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Tunczyk/Documents/Programowanie/Android/Android%20Studio/mobiUwB-android/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -55,7 +55,7 @@
     <dimen name="contact_font_size">20sp</dimen>
     <dimen name="contact_images_size">50dp</dimen>
     <dimen name="navigation_drawer_width">240dp</dimen>
-    <!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Tunczyk/Documents/Programowanie/Android/Android%20Studio/mobiUwB-android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="about_activity_title">O programie</string>
     <string name="about_authors_title">Autorzy</string>
@@ -99,7 +99,7 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="toast_press_again_to_close">"Wcisnij ponownie aby wyjść!"</string>
-    <!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/Tunczyk/Documents/Programowanie/Android/Android%20Studio/mobiUwB-android/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/custom_theme_background</item>

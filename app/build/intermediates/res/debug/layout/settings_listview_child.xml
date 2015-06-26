@@ -33,4 +33,4 @@
         android:groupIndicator="@null"
         android:dividerHeight="0dp"
         android:id="@+id/ChildListView"/>
-</LinearLayout><!-- From: file:/C:/programowanie/AndroidStudioProjects/mobiUwB-android/app/src/main/res/layout/settings_listview_child.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Tunczyk/Documents/Programowanie/Android/Android%20Studio/mobiUwB-android/app/src/main/res/layout/settings_listview_child.xml -->

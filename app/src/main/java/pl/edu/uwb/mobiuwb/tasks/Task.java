@@ -9,4 +9,5 @@ import pl.edu.uwb.mobiuwb.tasks.models.TaskOutput;
 public interface Task<Out extends TaskOutput>
 {
     void execute(TaskInput input, Out output);
+
 }

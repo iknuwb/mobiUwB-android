@@ -253,6 +253,7 @@ public class NotificationService extends Service
                             category.getKey(),
                             new Date());
                 }
+
                 i++;
             }
         }

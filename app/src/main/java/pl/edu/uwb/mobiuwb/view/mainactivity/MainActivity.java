@@ -52,41 +52,85 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+/**
+ * Jest to główne okno aplikacji MobiUwB.
+ */
 public class MainActivity extends Activity implements GuiAccess
 {
+    /**
+     * Kod zwrotny dla uruchomienia widoku Ustawień/Opcji.
+     */
     public static final int SETTINGS_ACTIVITY_RESULT = 0;
 
-
+    /**
+     * Jest to usługa odpowiedzialna za sprawdzanie dostępności oraz rodzaju Internetu.
+     */
     private InternetCheckingService internetCheckingService;
 
-
+    /**
+     * Pobiera usługę od sprawdzania Internetu.
+     * @return Usługa od sprawdzania Internetu.
+     */
     public InternetCheckingService getInternetCheckingService()
     {
         return internetCheckingService;
     }
 
-
+    /**
+     * Ten przycisk odpowiada za dostęp do wysuwanego bocznego menu.
+     */
     public ActionBarDrawerToggle drawerToggle;
 
+    /**
+     * Jest to fragment dla tego widoku, zawierający sporą jego część.
+     */
     private MainActivityFragment fragment;
 
+    /**
+     * Wygląd z wysuwanym bocznym menu.
+     */
     private DrawerLayout drawerLayout;
+
+    /**
+     * Lista jednostek w wysuwanym bocznym menu.
+     */
     private ListView drawerListView;
+
+    /**
+     * Kontener na listę jednostek w wysuwanym bocznym menu.
+     */
     private LinearLayout drawerLinearLayout;
+
+    /**
+     * Aktualnie zaznaczona pozycja na liście wysuwanego bocznego menu.
+     */
     private int currentSelectedPosition;
+
+    /**
+     * Czas na ponowne dotknięcie przycisku back, aby wyłączyć aplikację.
+     */
     private long backPressedTime;
 
-
+    /**
+     * Dzieje się, gdy Android tworzy ten widok.
+     * Zmusza Androida aby wyświetlił przycisk Menu.
+     * Nadaje widok z XML oraz wywołuje funkcję inicjalizującą.
+     * @param savedInstanceState Zapisany stan widoku na wypadek ponownego tworzenia go.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         forceShowMenuButton();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
     }
 
+    /**
+     * Dzieje się, gdy system operacyjny pozbywa się tego widoku z pamięci urządzenia.
+     * Zatrzymuje usługę sprawdzania Internetu.
+     * Aktywuje usługę powiadomień.
+     */
     @Override protected void onDestroy()
     {
         internetCheckingService.stopService();
@@ -98,6 +142,11 @@ public class MainActivity extends Activity implements GuiAccess
         super.onDestroy();
     }
 
+    /**
+     * Dzieje się, gdy już widok zostanie utworzony.
+     * Zatrzymuje usługę notyfikacyjną.
+     * @param savedInstanceState Zapisany stan widoku na wypadek ponownego tworzenia go.
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
     {
@@ -108,6 +157,12 @@ public class MainActivity extends Activity implements GuiAccess
                 NotificationService.STOP);
     }
 
+    /**
+     * Dzieje się gdy Android tworzy menu.
+     * Tworzy menu z XML.
+     * @param menu Menu.
+     * @return Czy utworzono menu.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -115,6 +170,12 @@ public class MainActivity extends Activity implements GuiAccess
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Dzieje się gdy dotkniemy jakiegoś elemenu menu.
+     * Deleguje dotknięcie do klasy MenuMethods.
+     * @param item Dotknięty element w menu.
+     * @return Czy nadpisać tę akcję.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -127,13 +188,23 @@ public class MainActivity extends Activity implements GuiAccess
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Dzieje się gdy Android zmieni konfigurację w trakcie działania
+     * tego widoku.
+     * @param newConfig Nowa konfiguracja.
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig)
     {
         super.onConfigurationChanged(newConfig);
     }
 
-
+    /**
+     * Dzieje się gdy dotkniemy przycisku back.
+     * Stopuje wyłaczenie aplikacji do czasu dwukliku back.
+     * Stopuje wyłączenie aplikacji do czasu uzyskania pierwszej
+     * możliwej strony WWW.
+     */
     @Override
     public void onBackPressed()
     {
@@ -166,6 +237,15 @@ public class MainActivity extends Activity implements GuiAccess
         }
     }
 
+    /**
+     * Wydarza się gdy dotkniemy przycisku i nie zostanie on obsłużony
+     * przez jakąkolwiek kontrolkę w tym widoku.
+     * Obsługujemy tutaj przycisk back w podobny sposób, co
+     *  w metodzie onBackPressed.
+     * @param keyCode Kod dotkniętego przycisku.
+     * @param event Wydarzenie dotknięcia przycisku.
+     * @return Czy obsłużyć doktnięcie przycisku tutaj
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
@@ -207,6 +287,11 @@ public class MainActivity extends Activity implements GuiAccess
         }
     }
 
+    /**
+     * Ustanawia domyślne właściwości dla tego widoku.
+     * W skład nich wchodzą tytuł widoku zależny od jednostki,
+     * utworzenie fragmentu z przeglądarką.
+     */
     private void setDefaults()
     {
         String title = StartupConfig.propertiesXmlResult.
@@ -225,6 +310,9 @@ public class MainActivity extends Activity implements GuiAccess
                 .commit();
     }
 
+    /**
+     * Inicjalizuje kontrolki tego widoku.
+     */
     private void init()
     {
         initControls();
@@ -234,6 +322,10 @@ public class MainActivity extends Activity implements GuiAccess
         readSettings();
     }
 
+    /**
+     * Inicjalizuje sprawdzacza stanu Internetu.
+     * Nadaje wszystkie typy sprawdzanego Internetu.
+     */
     private void initInternetChecker()
     {
         internetCheckingService = new InternetCheckingService();
@@ -250,6 +342,10 @@ public class MainActivity extends Activity implements GuiAccess
         internetCheckingService.execute();
     }
 
+    /**
+     * Reprezentuje nasłuchiwacz na utracone połączenie.
+     * Raportuje o tym za pomocą powiadomień Toast.
+     */
     OnConnectionChangedListener connectionLost = new OnConnectionChangedListener()
     {
         @Override public void connectionChanged(CheckingType checkingType)
@@ -257,6 +353,12 @@ public class MainActivity extends Activity implements GuiAccess
             Toast.makeText(MainActivity.this, getString(R.string.internet_checker_connection_lost), Toast.LENGTH_SHORT).show();
         }
     };
+
+    /**
+     * Reprezentuje nasłuchiwacz na zmieniony typ połączenia.
+     * Raportuje o tym za pomocą powiadomień Toast.
+     * Odświeża przeglądarkę.
+     */
     OnConnectionChangedListener connectionReceived = new OnConnectionChangedListener()
     {
         @Override public void connectionChanged(CheckingType checkingType)
@@ -284,6 +386,9 @@ public class MainActivity extends Activity implements GuiAccess
         }
     };
 
+    /**
+     * Inicjalizuje różne kontrolki związane z bocznym wysuwanym menu.
+     */
     private void initControls()
     {
         drawerLayout = (DrawerLayout) findViewById(
@@ -294,6 +399,13 @@ public class MainActivity extends Activity implements GuiAccess
                 R.id.drawer_linearlayout);
     }
 
+    /**
+     * Inicjalizuje boczne wysuwane menu nadając mu elementy
+     * pobrane z listy z pliku Właściwości.
+     * Ponadto nadaje wydarzenia związane z wyborem tych elementów.
+     * Będzie odświeżać stronę WWW przy wyborze jakiegoś elementu.
+     * Nadaje też domyślnie zaznaczony element.
+     */
     private void initNavigationDrawer()
     {
 
@@ -404,11 +516,9 @@ public class MainActivity extends Activity implements GuiAccess
             }
         };
 
-        drawerLayout.post(new Runnable()
-        {
+        drawerLayout.post(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 drawerToggle.syncState();
             }
         });
@@ -438,34 +548,54 @@ public class MainActivity extends Activity implements GuiAccess
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void finishActivity()
     {
         this.finish();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void refreshWebView()
     {
         fragment.refreshWebView();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startActivityAccess(Intent intent)
     {
         this.startActivity(intent);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override public void startActivityForResultAccess(Intent intent, int requestCode)
     {
         this.startActivityForResult(intent, requestCode);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override public Context getContextAccess()
     {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     * Czyta nowe ustawienia, jeżeli zgodzi się kod zwrotny dla
+     * ekranu Ustawień/Opcji.
+     */
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         Log.e(Globals.MOBIUWB_TAG, "ResultCode: " + resultCode);
@@ -489,6 +619,9 @@ public class MainActivity extends Activity implements GuiAccess
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * Czyta nowe ustawienia z ekranu Ustawień/Opcji.
+     */
     private void readSettings()
     {
         SharedPreferences sharedPreferences =

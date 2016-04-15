@@ -7,21 +7,32 @@ import pl.edu.uwb.mobiuwb.view.settings.adapter.items.dialog.DialogItemModel;
 import java.util.Date;
 
 /**
- * Created by sennajavie on 2015-05-03.
+ * {@inheritDoc}
+ * Tworzy model dialogu z doborem czasu.
  */
 public class TimePickerItemModel extends DialogItemModel<Date>
 {
+    /**
+     * Inicjuje pola za pomocą konstruktora bazowego.
+     * @param dialogCreationStrategy Określona strategia tworzenia dialogów.
+     */
     public TimePickerItemModel(
             DialogCreator dialogCreationStrategy)
     {
         super(dialogCreationStrategy);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override public String prettyPrintValue(Date value)
     {
         return TimeConventers.getPrettyTime(value.getHours(), value.getMinutes());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override protected int initLayout()
     {
         return pl.edu.uwb.mobiuwb.R.layout.settings_adapter_time_picker_item;

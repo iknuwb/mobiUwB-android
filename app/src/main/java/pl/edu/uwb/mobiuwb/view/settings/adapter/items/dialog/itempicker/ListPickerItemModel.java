@@ -8,11 +8,20 @@ import pl.edu.uwb.mobiuwb.controls.dialogs.ListDialog;
 import pl.edu.uwb.mobiuwb.view.settings.adapter.items.dialog.DialogItemModel;
 
 /**
- * Created by sennajavie on 2015-05-03.
+ * {@inheritDoc}
+ * Tworzy model dialogu z listą.
  */
 public class ListPickerItemModel extends DialogItemModel<Integer>
 {
+    /**
+     * Adapter niniejszej listy w dialogu.
+     */
     private ListAdapter adapter;
+
+    /**
+     * Inicjuje zmienne, pobiera adapter.
+     * @param dialogCreationStrategy Określona strategia tworzenia dialogu.
+     */
     public ListPickerItemModel(
             DialogCreator dialogCreationStrategy)
     {
@@ -21,11 +30,19 @@ public class ListPickerItemModel extends DialogItemModel<Integer>
         adapter = dialog.getAdapter();
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override public String prettyPrintValue(Integer value)
     {
         return adapter.getItem(value).toString();
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected int initLayout()
     {

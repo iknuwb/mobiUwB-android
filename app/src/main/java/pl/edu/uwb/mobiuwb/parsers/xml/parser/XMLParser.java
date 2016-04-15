@@ -42,11 +42,18 @@ import static javax.xml.transform.OutputKeys.*;
 
 
 /**
- * Jest to klasa odpowiedzialna za parsowanie XML'a.
+ * Jest to klasa odpowiedzialna za analizowanie XML'a.
  */
 public class XMLParser
 {
-
+    /**
+     * Metoda ta deserializuje XML.
+     * @param xmlFileName Plik XML.
+     * @return Zdeserializowany dokument XML.
+     * @throws IOException Jeżeli wystąpi problem z odczytem pliku.
+     * @throws ParserConfigurationException Jeżeli wystąpi problem z analizatorem
+     * @throws SAXException Gdy wystąpi problem z analizowaniem XML.
+     */
     private Document deserializeXml(File xmlFileName)
             throws
             IOException,
@@ -58,6 +65,14 @@ public class XMLParser
         return deserializeXml(xmlFileContent);
     }
 
+    /**
+     * Metoda ta deserializuje XML.
+     * @param xmlFileContent Zawartość pliku XML.
+     * @return Zdeserializowany dokument XML.
+     * @throws IOException Jeżeli wystąpi problem z odczytem pliku.
+     * @throws ParserConfigurationException Jeżeli wystąpi problem z analizatorem
+     * @throws SAXException Gdy wystąpi problem z analizowaniem XML.
+     */
     private Document deserializeXml(String xmlFileContent)
             throws
             IOException,
@@ -74,6 +89,12 @@ public class XMLParser
         return doc;
     }
 
+    /**
+     * Metoda ta czyta dokument z pamięci wewnętrznej urządzenia.
+     * @param xmlFileFullPath Pełna ścieżka do dokumentu.
+     * @return Zawartość dokumentu.
+     * @throws IOException Gdy wystąpi błąd wejścia/wyjścia.
+     */
     private String readXmlFromInternalStorage(String xmlFileFullPath)
             throws IOException
     {
@@ -97,13 +118,16 @@ public class XMLParser
     }
 
     /**
-     * Jest to metoda zajmująca się parsowaniem XML'a ze stronami WWW.
+     * Jest to metoda zajmująca się analizą XML-a ze stronami WWW.
      * Pobiera ona strony i zapisuje je do określonego modelu
-     * przechowywania stron (WebsiteModel).
+     * przechowywania stron.
      *
-     * @throws IOException
-     * @throws ParserConfigurationException
-     * @throws SAXException
+     * @return Obiekt z informacjami zawartymi w pliku Właściwości.
+     * @throws IOException Gdy wystąpi błąd wejścia/wyjścia.
+     * @throws ParserConfigurationException Gdy wystąpi błąd
+     * związany z analizatorem.
+     * @throws SAXException Gdy wystąpi błąd
+     * związany z analizatorem.
      */
     public PropertiesXmlResult deserializePropertiesXml(String fullFilePath)
             throws
@@ -115,6 +139,20 @@ public class XMLParser
         return deserializePropertiesXml(file);
     }
 
+    /**
+     * Jest to metoda zajmująca się analizą XML-a ze stronami WWW.
+     * Pobiera ona strony i zapisuje je do określonego modelu
+     * przechowywania stron (WebsiteModel).
+     *
+     * Domyślnie pobiera ten plik z folderów aplikacji.
+     *
+     * @return Obiekt z informacjami zawartymi w pliku Właściwości.
+     * @throws IOException Gdy wystąpi błąd wejścia/wyjścia.
+     * @throws ParserConfigurationException Gdy wystąpi błąd
+     * związany z analizatorem.
+     * @throws SAXException Gdy wystąpi błąd
+     * związany z analizatorem.
+     */
     public PropertiesXmlResult deserializePropertiesXml()
             throws
             IOException,
@@ -126,7 +164,20 @@ public class XMLParser
         return deserializePropertiesXml(file);
     }
 
-
+    /**
+     * Jest to metoda zajmująca się analizą XML-a ze stronami WWW.
+     * Pobiera ona strony i zapisuje je do określonego modelu
+     * przechowywania stron (WebsiteModel).
+     *
+     * @param file Plik, który zostanie przeanalizowany.
+     *
+     * @return Obiekt z informacjami zawartymi w pliku Właściwości.
+     * @throws IOException Gdy wystąpi błąd wejścia/wyjścia.
+     * @throws ParserConfigurationException Gdy wystąpi błąd
+     * związany z analizatorem.
+     * @throws SAXException Gdy wystąpi błąd
+     * związany z analizatorem.
+     */
     public PropertiesXmlResult deserializePropertiesXml(File file)
             throws
             IOException,
@@ -145,7 +196,11 @@ public class XMLParser
         return preparePropertiesXmlResult(defaultWebsites, websites, configurationFilePath);
     }
 
-
+    /**
+     * Zadaniem tego kodu jest wypisanie pliku XML w zrozumiałej formie.
+     * @param xml Dokument XML do wypisania.
+     * @throws Exception Gdy wystąpi jakiś wyjątek.
+     */
     public static void prettyPrint(Document xml) throws Exception
     {
         Transformer tf = TransformerFactory.newInstance().newTransformer();
@@ -156,7 +211,18 @@ public class XMLParser
         Log.d(Globals.MOBIUWB_TAG, out.toString());
     }
 
-
+    /**
+     * Jest to metoda zajmująca się analizą XML-a Konfiguracji.
+     *
+     * W domyśle pobiera ten plik z folderu aplikacji.
+     *
+     * @return Obiekt z informacjami zawartymi w pliku Konfiguracji.
+     * @throws IOException Gdy wystąpi błąd wejścia/wyjścia.
+     * @throws ParserConfigurationException Gdy wystąpi błąd
+     * związany z analizatorem.
+     * @throws SAXException Gdy wystąpi błąd
+     * związany z analizatorem.
+     */
     public ConfigXmlResult deserializeConfigurationXml()
             throws
             IOException,
@@ -169,6 +235,19 @@ public class XMLParser
         return deserializeConfigurationXml(doc);
     }
 
+
+    /**
+     * Jest to metoda zajmująca się analizą XML-a Konfiguracji.
+     *
+     * @param fileContent Zawartość pliku Konfiguracji.
+     *
+     * @return Obiekt z informacjami zawartymi w pliku Konfiguracji.
+     * @throws IOException Gdy wystąpi błąd wejścia/wyjścia.
+     * @throws ParserConfigurationException Gdy wystąpi błąd
+     * związany z analizatorem.
+     * @throws SAXException Gdy wystąpi błąd
+     * związany z analizatorem.
+     */
     public ConfigXmlResult deserializeConfigurationXml(String fileContent)
             throws
             IOException,
@@ -179,6 +258,18 @@ public class XMLParser
         return deserializeConfigurationXml(doc);
     }
 
+    /**
+     * Jest to metoda zajmująca się analizą XML-a Konfiguracji.
+     *
+     * @param document Dokument XML pliku Konfiguracji.
+     *
+     * @return Obiekt z informacjami zawartymi w pliku Konfiguracji.
+     * @throws IOException Gdy wystąpi błąd wejścia/wyjścia.
+     * @throws ParserConfigurationException Gdy wystąpi błąd
+     * związany z analizatorem.
+     * @throws SAXException Gdy wystąpi błąd
+     * związany z analizatorem.
+     */
     public ConfigXmlResult deserializeConfigurationXml(Document document)
             throws
             IOException,
@@ -193,7 +284,12 @@ public class XMLParser
         return result;
     }
 
-
+    /**
+     * Metoda ta analizuje autorów i wypełnia nimi parametr result.
+     * @param doc Dokument XML.
+     * @param result Ten parametr zostanie wypełniony
+     *               przeanalizowanymi autorami.
+     */
     private void parseAuthors(Document doc, ConfigXmlResult result)
     {
         NodeList tomaszukNodes = doc.getElementsByTagName("opiekun");
@@ -221,6 +317,13 @@ public class XMLParser
         }
     }
 
+    /**
+     * Metoda ta analizuje jednostki Uniwersytetu w Białymstoku.
+     * Wypełnia nimi parametr result.
+     * @param doc Dokument XML.
+     * @param result Parametr, który otrzyma dane
+     *               o jednostkach Uniwersytetu w Białymstoku.
+     */
     private void parseUniversityUnits(Document doc, ConfigXmlResult result)
     {
 
@@ -291,7 +394,15 @@ public class XMLParser
         }
     }
 
-    private void parseMobiUwBMap(Element unitElementMember, MobiUwBMap mobiUwBMap)
+    /**
+     * Metoda ta analizuje mapę.
+     * Wypełnia informacjami o niej parametr mobiUwBMap.
+     * @param unitElementMember Element XML.
+     * @param mobiUwBMap Parametr, który otrzyma dane
+     *               o mapie.
+     */
+    private void parseMobiUwBMap(Element unitElementMember,
+                                 MobiUwBMap mobiUwBMap)
     {
         NodeList nodeList = unitElementMember.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++)
@@ -313,7 +424,15 @@ public class XMLParser
         }
     }
 
-    private void parseCoordinates(Element unitElementMember, Coordinates coordinates)
+    /**
+     * Metoda ta analizuje koordynaty mapy.
+     * Wypełnia informacjami o nich parametr coordinates.
+     * @param unitElementMember Element XML.
+     * @param coordinates Parametr, który otrzyma dane
+     *               o koordynatach.
+     */
+    private void parseCoordinates(Element unitElementMember,
+                                  Coordinates coordinates)
     {
         NodeList nodeList = unitElementMember.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++)
@@ -334,7 +453,15 @@ public class XMLParser
         }
     }
 
-    private void parseUnitAddress(Element unitElementMember, UnitAddress address)
+    /**
+     * Metoda ta analizuje adres Jednostki Uniwerstytetu w Białymstoku.
+     * Wypełnia informacjami o nim parametr address.
+     * @param unitElementMember Element XML.
+     * @param address Parametr, który otrzyma dane
+     *               o adresie Jednostki.
+     */
+    private void parseUnitAddress(Element unitElementMember,
+                                  UnitAddress address)
     {
         NodeList nodeList = unitElementMember.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++)
@@ -363,7 +490,15 @@ public class XMLParser
         }
     }
 
-    private void parseStaticSectionsTag(Element sectionsElement, List<Section> staticSections)
+    /**
+     * Metoda ta analizuje statyczne sekcje.
+     * Wypełnia informacjami o nich parametr staticSections.
+     * @param sectionsElement Element XML.
+     * @param staticSections Parametr, który otrzyma dane
+     *               o sekcjach statycznych.
+     */
+    private void parseStaticSectionsTag(Element sectionsElement,
+                                        List<Section> staticSections)
     {
         NodeList sections = sectionsElement.getChildNodes();
         for (int i = 0; i < sections.getLength(); i++)
@@ -415,7 +550,15 @@ public class XMLParser
         }
     }
 
-    private void parseSectionsTag(Element sectionsElement, List<Section> normalSections)
+    /**
+     * Metoda ta analizuje sekcje.
+     * Wypełnia informacjami o nich parametr normalSections.
+     * @param sectionsElement Element XML.
+     * @param normalSections Parametr, który otrzyma dane
+     *               o sekcjach.
+     */
+    private void parseSectionsTag(Element sectionsElement,
+                                  List<Section> normalSections)
     {
         NodeList sections = sectionsElement.getChildNodes();
         for (int i = 0; i < sections.getLength(); i++)
@@ -457,6 +600,12 @@ public class XMLParser
         }
     }
 
+    /**
+     * Metoda ta analizuje tag konfiguracji.
+     * @param doc Dokument XML.
+     * @param tagName Nazwa taga konfiguracji.
+     * @return Zawartość taga konfiguracji.
+     */
     private String parseConfigurationTag(Document doc, String tagName)
     {
         NodeList nodes = doc.getElementsByTagName(tagName);
@@ -476,6 +625,12 @@ public class XMLParser
         return configurationFilePath;
     }
 
+    /**
+     * Metoda ta analizuje tag stron WWW Websites.
+     * @param doc Dokument XML.
+     * @param tagName Nazwa taga stron WWW Websites.
+     * @return Pozyskane strony WWW.
+     */
     private List<Website> parseWebsitesTag(
             Document doc,
             String tagName)
@@ -491,6 +646,11 @@ public class XMLParser
         return websites;
     }
 
+    /**
+     * Metoda ta analizuje pojedynczą stronę WWW Website.
+     * @param node Węzeł XML zawierający informację o stronie WWW.
+     * @return Pozyskana strona WWW.
+     */
     private Website parseWebsiteNode(Node node)
     {
         Website website = null;
@@ -517,6 +677,13 @@ public class XMLParser
         return website;
     }
 
+    /**
+     * Sprawdza, czy wynik analizy pliku Właściwości jest poprawny.
+     * @param defaultWebsites Znalezione domyślne strony WWW.
+     * @param websites Znalezione strony WWW.
+     * @param configurationFilePath Adres pliku Konfiguracji.
+     * @return Poprawny, bądź nie, wynik pliku Właściwości.
+     */
     private PropertiesXmlResult preparePropertiesXmlResult(
             List<Website> defaultWebsites,
             List<Website> websites,
@@ -528,13 +695,14 @@ public class XMLParser
     }
 
     /**
-     * Jest to metoda odpowiadająca za ustawienie nowej domyślnej strony WWW w
-     * XML'u.
+     * Jest to metoda odpowiadająca za ustawienie nowej
+     * domyślnej strony WWW w XML'u.
      *
-     * @param defaultWebsite nowy model do nadania jako domyślna strona WWW
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws TransformerException
+     * @param defaultWebsite nowy model do nadania
+     *                       jako domyślna strona WWW
+     * @throws ParserConfigurationException Wystąpi gdy będzie coś nie tak z analizatorem.
+     * @throws SAXException Wystąpi gdy będzie coś nie tak z analizatorem.
+     * @throws TransformerException Wystąpi gdy będzie coś nie tak z analizatorem.
      */
     public void serializeDefaultWebsite(Website defaultWebsite)
             throws IOException,
@@ -570,6 +738,11 @@ public class XMLParser
         transformer.transform(source, result);
     }
 
+    /**
+     * Metoda ta nadpisuje domyślną stronę WWW.
+     * @param defaultWebsite Domyślna strona WWW.
+     * @param node Węzeł XML z domyślną stroną WWW.
+     */
     private void overwriteDefaultWebsite(Website defaultWebsite,
                                          Node node)
     {

@@ -13,15 +13,41 @@ import pl.edu.uwb.mobiuwb.configuration.StartupConfig;
 import pl.edu.uwb.mobiuwb.view.mainactivity.MainActivity;
 import pl.edu.uwb.mobiuwb.view.somethingWrong.SomethingWrongActivity;
 
+/**
+ * Jest to ekran ładowania aplikacji.
+ */
 public class SplashScreenActivity extends Activity implements ConfigureEvents
 {
+    /**
+     * Główny wątek tego ekranu.
+     */
     private Thread splashIntervalThread;
+
+    /**
+     * Zmienna pomocnicza do podwójnego kliknięcia,
+     * aby zastopować widok.
+     */
     private boolean doubleClickStop = false;
+
+    /**
+     * Odstęp od dwóch kliknięć w celu zastopowania
+     * widoku.
+     */
     private static long backPressedTime;
-    private SharedPreferences prefs = null;
+
+    /**
+     * Informuje, czy konfiguracja została zakończona.
+     */
     private boolean configurationFinished;
+
+    /**
+     * Czy zatrzymać wątek wewnętrzny.
+     */
     private boolean breakThread = false;
 
+    /**
+     * Zatrzyuje wątek wewnętrzny.
+     */
     private void stopThread()
     {
         synchronized (this)
@@ -30,6 +56,13 @@ public class SplashScreenActivity extends Activity implements ConfigureEvents
         }
     }
 
+    /**
+     * Wydarza się gdy aplikacja tworzy ten widok.
+     * Nadaje layout z XML.
+     * Uruchamia wątek sprawdzający, czy konfiguracja się zakończyła.
+     * @param savedInstanceState Zapisany stan widoku.
+     *                           Na wypadek ponownej generacji.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -79,6 +112,13 @@ public class SplashScreenActivity extends Activity implements ConfigureEvents
         splashIntervalThread.start();
     }
 
+    /**
+     * Dzieje się po utworzeniu tego widoku.
+     * Uruchamia konfigurację startową aplikacji.
+     * Nadaje wydarzenie ukończenia konfiguracji.
+     * @param savedInstanceState Zapisany stan widoku.
+     *                           Na wypadek ponownej generacji.
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
     {
@@ -89,7 +129,9 @@ public class SplashScreenActivity extends Activity implements ConfigureEvents
         startupConfig.addOnConfigurationEventListener(this);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override public void onConfigurationFinished(boolean succeeded)
     {
         if(succeeded == true)
@@ -108,11 +150,21 @@ public class SplashScreenActivity extends Activity implements ConfigureEvents
         }
     }
 
+    /**
+     * Wydarza się po kliknięciu przycisku back.
+     */
     @Override
     public void onBackPressed()
     {
     }
 
+    /**
+     * Wydarza się, gdy klikniemy przycisk nieobsłużony przez jakąś kontrolkę.
+     * Obsługuje funkcjonalność dwuklika aby wyłączyć ekran.
+     * @param keyCode Kod przycisku.
+     * @param event Wydarzenie przycisku.
+     * @return Czy nadpisać kliknięcie.
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {

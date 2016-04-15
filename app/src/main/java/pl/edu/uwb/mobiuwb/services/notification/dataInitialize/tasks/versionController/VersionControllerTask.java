@@ -14,11 +14,26 @@ import pl.edu.uwb.mobiuwb.tasks.Task;
 import pl.edu.uwb.mobiuwb.tasks.models.TaskInput;
 
 /**
- * Created by Tunczyk on 2015-06-03.
+ * {@inheritDoc}
+ * To jest zadanie polegające na zapewnieniu zawsze najnowszej wersji pliku
+ * Konfiguracji.
  */
 public class VersionControllerTask implements Task<DataInitializeTaskOutput>
 {
+    /**
+     * Nazwa usługi do Preferencji.
+     */
     public static final String SHARED_PREFERENCES_SERVICE_NAME = "sharedPrefsService";
+
+    /**
+     * {@inheritDoc}
+     * Zadanie to wykonuje bardzo złożony proces, polegający na pobraniu
+     * najnowszej wersji pliku Konfiguracji. Sprowadza się on do dwóch założeń:
+     * Sprawdzenia stanu pliku Konfiguracji lokalnego, oraz sprawdzenia pliku
+     * Konfiguracji w Internecie. Jeżeli któryś z nich jest aktualniejszy, to
+     * zostaje on pobrany na urządzenie a metoda ta wypełni swój output
+     * właśnie nim.
+     */
     @Override
     public void execute(TaskInput input, DataInitializeTaskOutput output)
     {

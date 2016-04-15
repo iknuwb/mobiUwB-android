@@ -1,11 +1,20 @@
 package pl.edu.uwb.mobiuwb.connection;
 
 /**
- * Created by Tunczyk on 2015-05-05.
+ * Jest to reprezentacja typu połączenia z Internetem.
  */
 public enum CheckingType
 {
+    /**
+     * Połączenie typu WiFi.
+     */
     WIFI,
+    /**
+     * Połączenie typu mobilnego.
+     */
     MOBILE,
+    /**
+     * Brak połączenia.
+     */
     NONE
 }

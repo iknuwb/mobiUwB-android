@@ -15,10 +15,16 @@ import pl.edu.uwb.mobiuwb.tasks.models.TaskInput;
 import pl.edu.uwb.mobiuwb.parsers.xml.parser.XMLParser;
 
 /**
- * Created by Tunczyk on 2015-06-03.
+ * {@inheritDoc}
+ * Zadanie to deserializuje plik Właściwości.
  */
 public class PropertiesXmlTask implements Task<DataInitializeTaskOutput>
 {
+    /**
+     * {@inheritDoc}
+     * Zadanie to deserializuje plik XML Właściwości.
+     * Pobiera z niego wszelkie właściwości i zapisuje do outputu.
+     */
     @Override
     public void execute(TaskInput input, DataInitializeTaskOutput output)
     {

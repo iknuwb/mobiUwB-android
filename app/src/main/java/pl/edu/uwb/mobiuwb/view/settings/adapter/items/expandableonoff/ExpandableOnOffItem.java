@@ -13,21 +13,35 @@ import pl.edu.uwb.mobiuwb.utillities.Globals;
 import pl.edu.uwb.mobiuwb.view.settings.adapter.items.Item;
 
 /**
- * Created by Tunczyk on 2015-04-18.
+ * {@inheritDoc}
+ * Ta kontrolka służy do otwierania oraz zamykania grupy kontrolek
+ * na liście zagnieżdżonych grup.
  */
-
-
 public class ExpandableOnOffItem
         extends Item<ExpandableOnOffItemModel>
         implements CompoundButton.OnCheckedChangeListener
 {
+    /**
+     * Lista z rozszerzalnymi elementami.
+     * Każdy element może posiadać swoją podgrupę
+     */
     private ExpandableListView listView;
 
+    /**
+     * Inicjuje zmienne poprzez konstruktor powyżej.
+     * @param model Model tej kontrolki.
+     */
     public ExpandableOnOffItem(ExpandableOnOffItemModel model)
     {
         super(model);
     }
 
+    /**
+     * {@inheritDoc}
+     * Nadaje wydarzenie zmiany expanded na true/false.
+     * Korzysta z wzorca ViewHolder w celu redukcji ilości generacji danej kontrolki.
+     * Nadaje tekst oraz kontrolkę Switch.
+     */
     @Override
     protected void configureGroupView(int groupPosition,
                                       final View convertView,
@@ -60,6 +74,12 @@ public class ExpandableOnOffItem
         setExpanded(model.isExpanded(), listView, groupPosition);
     }
 
+    /**
+     * Dzieje się gdy stan zaznaczenia zmienia się.
+     * Nadaje wtedy stan rozszerzenia - czy dana grupa jest rozszerzona czy też nie.
+     * @param compoundButton Przycisk.
+     * @param isChecked Czy zaznaczono.
+     */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
     {
@@ -70,6 +90,12 @@ public class ExpandableOnOffItem
               "isExpanded w onCheckedChanged dla " + model.getText() + ": " + model.isExpanded());
     }
 
+    /**
+     * Nadaje status rozszerzony/zwinięty dla określonej grupy.
+     * @param expanded Czy rozszerzyć.
+     * @param listView Lista, której dotyczy polecenie.
+     * @param groupPosition Pozycja grupy.
+     */
     private void setExpanded(boolean expanded, ExpandableListView listView, int groupPosition)
     {
         if (expanded)
@@ -82,9 +108,20 @@ public class ExpandableOnOffItem
         }
     }
 
+    /**
+     * Klasa odpowiedzialna za wzorzec przechowywania widoku.
+     * Dzięki temu nie jest on ciągle re-generowany.
+     */
     private class ViewHolder
     {
+        /**
+         * Przechowuje kontrolkę checkboxa.
+         */
         public TextView textView;
+
+        /**
+         * Przechowuje kontrolkę switcha.
+         */
         public Switch switchView;
     }
 }

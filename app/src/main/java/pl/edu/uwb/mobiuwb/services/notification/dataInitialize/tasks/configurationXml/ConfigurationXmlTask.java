@@ -12,10 +12,15 @@ import pl.edu.uwb.mobiuwb.tasks.models.TaskInput;
 import pl.edu.uwb.mobiuwb.parsers.xml.parser.XMLParser;
 
 /**
- * Created by Tunczyk on 2015-06-03.
+ * {@inheritDoc}
+ * To zadanie odpowiada za deserializację pliku Konfiguracji.
  */
 public class ConfigurationXmlTask implements Task<DataInitializeTaskOutput>
 {
+    /**
+     * {@inheritdoc}
+     * Deserializuje plik Konfiguracji.
+     */
     @Override
     public void execute(TaskInput input, DataInitializeTaskOutput output)
     {

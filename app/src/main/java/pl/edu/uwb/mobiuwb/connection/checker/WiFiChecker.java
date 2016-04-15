@@ -7,11 +7,16 @@ import pl.edu.uwb.mobiuwb.connection.InternetChecker;
 
 import java.util.ArrayList;
 
+
 /**
- * Created by Tunczyk on 2015-05-05.
+ *  {@inheritDoc}
+ *  Ta podklasa rozpoznaje Internet typu WiFi.
  */
 public class WiFiChecker extends InternetChecker
 {
+    /**
+     *  {@inheritDoc}
+     */
     @Override protected void fillNetworkInfo(ConnectivityManager connectivityManager,
                                              ArrayList<NetworkInfo> networkInfos)
     {
@@ -20,6 +25,9 @@ public class WiFiChecker extends InternetChecker
                         ConnectivityManager.TYPE_WIFI));
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override public boolean makeCheck()
     {
         for (NetworkInfo networkInfo : networkInfos)

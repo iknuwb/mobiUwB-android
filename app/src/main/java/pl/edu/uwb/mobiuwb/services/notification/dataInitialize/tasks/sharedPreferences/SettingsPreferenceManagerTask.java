@@ -17,18 +17,44 @@ import pl.edu.uwb.mobiuwb.view.settings.adapter.items.dialog.timepicker.TimePick
 import pl.edu.uwb.mobiuwb.view.settings.adapter.items.expandableonoff.ExpandableOnOffItemModel;
 
 /**
- * Created by Tunczyk on 2015-06-03.
+ * {@inheritDoc}
+ * Zawarte jest tutaj zadanie związane z Preferencjami ekranu Ustawień/Opcji.
+ * Polega ono na pobraniu wszelkich informacji
+ * na temat opcji w ekranie Ustawień/Opcji.
  */
 public class SettingsPreferenceManagerTask implements Task<DataInitializeTaskOutput>
 {
+    /**
+     * Tekst ustawienia notyfikacji.
+     */
     public String notificationText;
+
+    /**
+     * Tekst ustawienia zakresu czasu.
+     */
     public String timeRangeText;
 
+    /**
+     * Tekst ustawienia częstotliwości powiadomień.
+     */
     public String frequencyText;
 
+    /**
+     * Tekst ustawienia czasu "od".
+     */
     public String fromText;
+
+    /**
+     * Tekst ustawienia czasu "do".
+     */
     public String toText;
 
+    /**
+     * {@inheritDoc}
+     * Ta logika jest odpowiedzialna za przeszukanie wszystkich opcji w ekranie Opcji/Ustawień
+     * i wydobycie z nich wszelkich informacji, takich jak czasy, zaznaczenie checkboxa i innych.
+     * Modele tych opcji są pozyskiwane z Preferencji ekranu Ustawień/Opcji.
+     */
     @Override public void execute(TaskInput input, DataInitializeTaskOutput output)
     {
         SettingsPreferenceManagerTaskInput settingsPreferenceManagerTaskInput =

@@ -12,13 +12,22 @@ import pl.edu.uwb.mobiuwb.view.settings.SettingsActivity;
 import pl.edu.uwb.mobiuwb.view.settings.adapter.items.Item;
 
 /**
- * Created by Tunczyk on 2015-04-18.
+ * {@inheritDoc}
+ * Tworzy element widoku Opcji/Ustawień bazujący na dialogu.
  */
 public class DialogItem extends Item<DialogItemModel>
         implements View.OnClickListener
 {
+    /**
+     * Sposób tworzenia dialoga.
+     */
     private DialogCreator dialog;
 
+    /**
+     * Nadaje zmienne, wywołuje bazowy konstruktor.
+     * @param model Model niniejszej kontrolki.
+     * @param dialogCreationStrategy Sposób tworzenia dialoga.
+     */
     public DialogItem(DialogItemModel model,
                       DialogCreator dialogCreationStrategy)
     {
@@ -26,6 +35,13 @@ public class DialogItem extends Item<DialogItemModel>
         this.dialog = dialogCreationStrategy;
     }
 
+    /**
+     * {@inheritDoc}
+     * Nadaje wydarzenia zmiany wartości dla tego dialoga.
+     * Tworzy przycisk którego kliknięcie utworzy dialog.
+     * Wykorzystuje wzorzec ViewHolder, który polega na zapisaniu referencji
+     * i ograniczeniu przez to liczy utworzeń danej kontrolki.
+     */
     @Override
     protected void configureGroupView(int groupPosition, View convertView, ViewGroup parent)
     {
@@ -55,6 +71,10 @@ public class DialogItem extends Item<DialogItemModel>
         convertView.setOnClickListener(this);
     }
 
+    /**
+     * Kliknięcie tego przycisku tworzy dialog.
+     * @param view Potomek dialoga.
+     */
     @Override
     public void onClick(final View view)
     {
@@ -62,9 +82,20 @@ public class DialogItem extends Item<DialogItemModel>
         dialog.show(SettingsActivity.settingsActivityFragmentManager, getClass().getName());
     }
 
+    /**
+     * Jest to element wzorca, który polega na zapisaniu referencji do
+     * kontrolki, aby uniknąć jej nadmiernego tworzenia przez system.
+     */
     private class ViewHolder
     {
+        /**
+         * Kontrolka z tekstem.
+         */
         public TextView textView;
+
+        /**
+         * Kontrolka z tekstową reprezentacją wartości.
+         */
         public TextView valueTextView;
     }
 }

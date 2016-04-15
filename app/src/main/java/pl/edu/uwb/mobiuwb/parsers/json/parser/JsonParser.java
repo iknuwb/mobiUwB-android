@@ -14,11 +14,23 @@ import java.util.List;
 import pl.edu.uwb.mobiuwb.parsers.json.model.Feed;
 
 /**
- * Created by Tunczyk on 2015-06-03.
+ * Jest to reprezentacja analizatora formatu JSON.
  */
 public class JsonParser
 {
+    /**
+     * Uogólniony format daty używany w plikach JSON w aplikacji.
+     */
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
+    /**
+     * Analizuje format JSON zawierający listę
+     * kanałów informacyjnych typu Feed.
+     * @param fileContent Format JSON.
+     * @return Lista kanałów informatycjnych typu Feed.
+     * @throws JSONException Zostaje on zgłoszony, gdy wystąpi problem z
+     * analizą formatu JSON.
+     */
     public List<Feed> parseFeedsJson(String fileContent)
         throws JSONException
     {
@@ -38,6 +50,12 @@ public class JsonParser
         return feeds;
     }
 
+    /**
+     * Metoda ta analizuje datę i zwraca poprawnie sformatowaną datę.
+     * @param unparsedDate Niesformatowana data.
+     * @return Sformatowana data.
+     * @throws JSONException Gdy wystąpi problem z JSON-em.
+     */
     private Date parseDate(String unparsedDate) throws JSONException
     {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);

@@ -9,17 +9,35 @@ import pl.edu.uwb.mobiuwb.R;
 import pl.edu.uwb.mobiuwb.view.settings.adapter.SettingsAdapter;
 
 /**
- * Created by Tunczyk on 2015-04-18.
+ * Jest to abstrakcyjna reprezentacja kontrolki na liście kontrolek w
+ * ekranie Opcji/Ustawień.
  */
 public abstract class Item<TItemModel extends ItemModel>
 {
+    /**
+     * Model tej kontrolki.
+     */
     public TItemModel model;
 
+    /**
+     * Nadaje zmienne.
+     * @param model Model tej kontrolki.
+     */
     protected Item(TItemModel model)
     {
         this.model = model;
     }
 
+    /**
+     * Wywoływane gdy kontrolka listy żąda utworzenia jej elementów.
+     * Wywołuje metodę, która jest implementowana przez podklasy a polega
+     * ona na skonfigurowaniu nowo generowanego elementu.
+     * Wykorzystuje ona ID definicji widoku pobrane z modelu elementu.
+     * @param groupPosition Pozycja grupy.
+     * @param convertView Widok.
+     * @param parent Rodzic kontrolki.
+     * @return Utworzona kontrolka.
+     */
     public View getGroupView(int groupPosition, View convertView, ViewGroup parent)
     {
         if (convertView == null)
@@ -31,7 +49,14 @@ public abstract class Item<TItemModel extends ItemModel>
         configureGroupView(groupPosition, convertView, parent);
         return convertView;
     }
-
+    /**
+     * Wywoływane gdy kontrolka listy żąda utworzenia jej elementu dziecka.
+     * Dzieckiem jest tutaj grupa kontrolek, zagnieżdżonych rekurencyjnie.
+     * Reprezentacją tych kontrolek jest właśnie ta klasa.
+     * @param convertView Widok.
+     * @param parent Rodzic kontrolki.
+     * @return Utworzona kontrolka.
+     */
     public View getChildView(View convertView, ViewGroup parent)
     {
         if (convertView == null)
@@ -48,7 +73,13 @@ public abstract class Item<TItemModel extends ItemModel>
         return convertView;
     }
 
-
+    /**
+     * Metoda ta polega na skonfigurowaniu nowo generowanego elementu
+     * widoku.
+     * @param groupPosition Pozycja grupy.
+     * @param convertView Widok.
+     * @param parent Rodzic kontrolki.
+     */
     protected abstract void configureGroupView(int groupPosition, View convertView,
                                                ViewGroup parent);
 }

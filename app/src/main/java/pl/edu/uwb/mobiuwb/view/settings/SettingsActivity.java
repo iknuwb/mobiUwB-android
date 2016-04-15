@@ -14,16 +14,40 @@ import pl.edu.uwb.mobiuwb.view.settings.adapter.items.ItemModel;
 
 import java.util.ArrayList;
 
+/**
+ * Jest to widok odpowiedzialny za Ustawienia/Opcje w programie.
+ */
 public class SettingsActivity extends Activity
 {
+    /**
+     * Klucz, pod którym zapisane są modele opcji.
+     */
     private static final String SETTINGS_ITEMS_MODELS = "SettingsItemsModels";
-    public static final String SHARED_PREFERENCES_NAME = "SettingsPreferences";
+
+    /**
+     * Zarządzacz fragmentami.
+     */
     public static FragmentManager settingsActivityFragmentManager;
 
+    /**
+     * ListView z zagnieżdżonymi rekurencyjnie grupami widoków.
+     */
     private ExpandableListView settingsActivityListView;
 
+    /**
+     * Modele zawarte w zagnieżdżającym się ListView.
+     */
     private ArrayList<ItemModel> data;
 
+    /**
+     * Dzieje się gdy tworzymy ten widok.
+     * Nadaje wygląd z XML.
+     * Inicjuje zarządzacza fragmentami.
+     *
+     * Inicjuje kontrolki.
+     * @param savedInstanceState Zapisany stan widoku,
+     *                           na wypadek re-generacji.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -43,8 +67,13 @@ public class SettingsActivity extends Activity
         InitializeControls();
     }
 
-
-
+    /**
+     * Wydarza się, gdy Android stopuje ten widok.
+     * Zapisuje dane ustawień.
+     * Nadaje wynik tego okna na OK.
+     * Wyłącza okno.
+     * Ponownie startuje usługę powiadomień.
+     */
     @Override
     protected void onStop()
     {
@@ -59,6 +88,9 @@ public class SettingsActivity extends Activity
                 NotificationService.RELOAD_CONFIGURATION);
     }
 
+    /**
+     * Zapisuje do pamięci telefonu listę elementów obecnych w opcjach.
+     */
     private void storeSettingsData()
     {
         SettingsPreferencesManager settingsPreferencesManager =
@@ -66,6 +98,11 @@ public class SettingsActivity extends Activity
         settingsPreferencesManager.store(data);
     }
 
+    /**
+     * Wydarza się, gdy Android zapisuje status tego widoku.
+     * Dorzuca do paczki zapisującej elementy z listy zagnieżdżanej.
+     * @param outState Paczka do zapisu statusu widoku.
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
@@ -73,11 +110,19 @@ public class SettingsActivity extends Activity
         outState.putParcelableArrayList(SETTINGS_ITEMS_MODELS, data);
     }
 
+    /**
+     * Inicjalizuje kontrolki.
+     */
     private void InitializeControls()
     {
         InitializeSettingsActivityListView();
     }
 
+    /**
+     * Inicjalizuje listę elementów zagnieżdżanych.
+     * Nadaje jej adapterowi elementy.
+     * Nadaje jej adapter z tymi elementami.
+     */
     private void InitializeSettingsActivityListView()
     {
         settingsActivityListView =
@@ -86,6 +131,11 @@ public class SettingsActivity extends Activity
         settingsActivityListView.setAdapter(settingsAdapter);
     }
 
+    /**
+     * Enkapsuluje w sobie logikę kliknięcia na przycisk cofnij.
+     * Zapisuje w nim elementy listy rozwijanej w tym programie do pamięci tel.
+     * Nadaje rezultat tego widoku na OK.
+     */
     @Override public void onBackPressed()
     {
         storeSettingsData();

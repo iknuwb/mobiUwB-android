@@ -8,10 +8,14 @@ import pl.edu.uwb.mobiuwb.connection.InternetChecker;
 import java.util.ArrayList;
 
 /**
- * Created by Tunczyk on 2015-05-05.
+ * {@inheritDoc}
+ * Ten podtyp rozpoznaje mobilny internet.
  */
 public class MobileChecker extends InternetChecker
 {
+    /**
+     *  {@inheritDoc}
+     */
     @Override protected void fillNetworkInfo(ConnectivityManager connectivityManager,
                                              ArrayList<NetworkInfo> networkInfos)
     {
@@ -20,6 +24,9 @@ public class MobileChecker extends InternetChecker
                         ConnectivityManager.TYPE_MOBILE));
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override public boolean makeCheck()
     {
         for (NetworkInfo networkInfo : networkInfos)

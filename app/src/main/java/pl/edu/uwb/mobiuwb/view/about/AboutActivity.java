@@ -12,11 +12,16 @@ import pl.edu.uwb.mobiuwb.view.about.adapter.AuthorsAdapter;
 import java.util.List;
 
 /**
- * Created by sennajavie on 2015-05-15.
+ * Jest to widok, w którym widnieją różne informacje o aplikacji: lista
+ * autorów, licencja, podziękowania.
  */
 public class AboutActivity extends Activity
 {
-
+    /**
+     * Wydarza się gdy Android tworzy ten widok.
+     * Wydarzenie to nadaje widokowi wygląd z XML.
+     * @param savedInstanceState Zapisany stan widoku.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -24,6 +29,12 @@ public class AboutActivity extends Activity
         setContentView(R.layout.activity_about);
     }
 
+    /**
+     * Następuje po utworzeniu danego widoku.
+     * Pobiera ListView autorów, wypełnia ją adapterem.
+     * Nadaje jej poprawną wysokość.
+     * @param savedInstanceState Zapisany stan widoku.
+     */
     @Override protected void onPostCreate(Bundle savedInstanceState)
     {
         super.onPostCreate(savedInstanceState);

@@ -7,10 +7,16 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 /**
- * Created by sennajavie on 2015-05-15.
+ * Zebrane są tutaj metody, których działanie jest dziwne, ale pożądane.
+ * Tyczą się one kontrolki ListView.
  */
 public class ListViewHacks
 {
+    /**
+     * Nadaje wysokość dla kontrolki, bazując na jej dzieciach.
+     * Wywołuje ona metody obliczające wysokość dla kontrolek.
+     * @param listView Kontrolka listy.
+     */
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)

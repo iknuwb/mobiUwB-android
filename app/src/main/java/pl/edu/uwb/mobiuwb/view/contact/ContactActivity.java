@@ -13,42 +13,101 @@ import pl.edu.uwb.mobiuwb.configuration.StartupConfig;
 import pl.edu.uwb.mobiuwb.parsers.xml.parser.Coordinates;
 
 /**
- * Created by sennajavie on 2015-05-15.
+ * Jest to widok przedstawiający informacje kontaktowe.
  */
 public class ContactActivity extends Activity
 {
+    /**
+     * Kontrolka z nazwą jednostki.
+     */
     private TextView unitName;
+
+    /**
+     * Kontrolka z kodem pocztowym i miastem.
+     */
     private TextView postalCodeAndCity;
+
+    /**
+     * Kontrolka z ulicą i numerem.
+     */
     private TextView streetAndNumber;
 
+    /**
+     * Przycisk uruchamiający e-mail.
+     */
     private LinearLayout emailButton;
+
+    /**
+     * Kontrolka z e-mailem.
+     */
     private TextView emailTextView;
 
+    /**
+     * Przycisk odpowiedzialny za telefon nr 1.
+     */
     private LinearLayout call1Button;
+
+    /**
+     * Kontrolka z tekstem telefonu nr 1.
+     */
     private TextView call1TextView;
 
+    /**
+     * Przycisk odpowiedzialny za telefon nr 2.
+     */
     private LinearLayout call2Button;
+
+    /**
+     * Kontrolka z tekstem telefonu nr 1.
+     */
     private TextView call2TextView;
 
+    /**
+     * Przycisk odpowiedzialny za fax.
+     */
     private LinearLayout faxButton;
+
+    /**
+     * Kontrolka z tekstem fax.
+     */
     private TextView faxTextView;
 
+    /**
+     * Przycisk odpowiedzialny za uruchomienie aplikacji mapa.
+     */
     private LinearLayout mapButton;
+
+    /**
+     * Kontrolka z tekstem mapy.
+     */
     private TextView mapTextView;
 
 
+    /**
+     * Wydarza się gdy Android tworzy ten widok.
+     * Wydarzenie to nadaje widokowi wygląd z XML.
+     * @param savedInstanceState Zapisany stan widoku.
+     */
     @Override protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
     }
 
+    /**
+     * Następuje po utworzeniu danego widoku.
+     * Wywołuje metodę inicjalizacyjną.
+     * @param savedInstanceState Zapisany stan widoku.
+     */
     @Override protected void onPostCreate(Bundle savedInstanceState)
     {
         super.onPostCreate(savedInstanceState);
         init();
     }
 
+    /**
+     * inicjalizuje kontrolki.
+     */
     private void init()
     {
         initContactFields();
@@ -64,6 +123,9 @@ public class ContactActivity extends Activity
         initMapElement();
     }
 
+    /**
+     * Inicjalizuje kontrolki mapy.
+     */
     private void initMapElement()
     {
         mapButton = (LinearLayout)findViewById(R.id.map_button);
@@ -72,6 +134,9 @@ public class ContactActivity extends Activity
         mapButton.setOnClickListener(mapOnClickListener);
     }
 
+    /**
+     * Jest to wydarzenie kliknięcia na przycisk mapy.
+     */
     View.OnClickListener mapOnClickListener = new View.OnClickListener()
     {
         @Override public void onClick(View view)
@@ -90,6 +155,9 @@ public class ContactActivity extends Activity
         }
     };
 
+    /**
+     * Inicjalizuje kontrolki odpowiedzialne za fax.
+     */
     private void initFaxElement()
     {
         faxButton = (LinearLayout)findViewById(R.id.fax_button);
@@ -98,6 +166,10 @@ public class ContactActivity extends Activity
         faxButton.setOnClickListener(faxOnClickListener);
     }
 
+    /**
+     * Wydarza się gdy dotkniemy przycisku z faxem.
+     * Uruchamia odpowiednią akcję w systemie Android.
+     */
     private View.OnClickListener faxOnClickListener = new View.OnClickListener()
     {
         @Override public void onClick(View view)
@@ -106,6 +178,9 @@ public class ContactActivity extends Activity
         }
     };
 
+    /**
+     * Inicjalizuje elementy odpowiedzialne za telefon 1.
+     */
     private void initPhone1Element()
     {
         call1Button = (LinearLayout)findViewById(R.id.call_1_button);
@@ -114,6 +189,10 @@ public class ContactActivity extends Activity
         call1Button.setOnClickListener(phone1OnClickListener);
     }
 
+    /**
+     * Wydarza się gdy dotkniemy przycisku z telefonem 1.
+     * Wykonuje się wtedy akcja otwarcia aplikacji do dzwonienia.
+     */
     private View.OnClickListener phone1OnClickListener = new View.OnClickListener()
     {
         @Override public void onClick(View view)
@@ -122,6 +201,9 @@ public class ContactActivity extends Activity
         }
     };
 
+    /**
+     * Inicjalizuje elementy odpowiedzialne za telefon 2.
+     */
     private void initPhone2Element()
     {
         if (StartupConfig.configXmlResult.getCurrentUniversityUnit().getTel2() != null)
@@ -134,6 +216,10 @@ public class ContactActivity extends Activity
         }
     }
 
+    /**
+     * Wydarza się gdy dotkniemy przycisku z telefonem 2.
+     * Wykonuje się wtedy akcja otwarcia aplikacji do dzwonienia.
+     */
     private View.OnClickListener phone2OnClickListener = new View.OnClickListener()
     {
         @Override public void onClick(View view)
@@ -142,6 +228,9 @@ public class ContactActivity extends Activity
         }
     };
 
+    /**
+     * Inicjalizuje elementy odpowiedzialne za e-mail.
+     */
     private void initEmailElement()
     {
         emailButton = (LinearLayout)findViewById(R.id.email_button);
@@ -150,6 +239,11 @@ public class ContactActivity extends Activity
 
         emailButton.setOnClickListener(emailOnClickListener);
     }
+
+    /**
+     * Wydarza się gdy dotkniemy przycisku z e-mailem.
+     * Wykonuje się wtedy akcja otwarcia aplikacji do e-maili.
+     */
     private View.OnClickListener emailOnClickListener = new View.OnClickListener()
     {
         @Override public void onClick(View view)
@@ -160,6 +254,9 @@ public class ContactActivity extends Activity
         }
     };
 
+    /**
+     * Inicjuje pola odpowiedzialne za kontakt.
+     */
     private void initContactFields()
     {
         unitName = (TextView)findViewById(R.id.unit_name);
@@ -197,6 +294,12 @@ public class ContactActivity extends Activity
         streetAndNumber.setText(unitStreetString + " " + unitNumberString);
     }
 
+    /**
+     * Otwiera aplikację odpowiedzialną za e-maile.
+     * Nadaje jej adresy oraz temat.
+     * @param addresses Adresy e-mail.
+     * @param subject Temat.
+     */
     public void composeEmail(String[] addresses, String subject)
     {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -208,6 +311,11 @@ public class ContactActivity extends Activity
         }
     }
 
+    /**
+     * Uruchamia aplikację odpowiedzialną za telefon.
+     * Nadaje jej od razu wpisany telefon.
+     * @param phone Numer telefonu.
+     */
     public void call(String phone) {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
         callIntent.setData(Uri.parse("tel:" + phone));

@@ -15,16 +15,32 @@ import java.util.List;
 import pl.edu.uwb.mobiuwb.R;
 
 /**
- * Created by sennajavie on 2015-05-15.
+ * Jest to adapter listy z autorami.
  */
 public class AuthorsAdapter extends ArrayAdapter<String>
 {
+    /**
+     * Inicjuje zmienne wywołując bazowy konstruktor.
+     * @param context Kontekst widoku bądź aplikacji.
+     * @param textViewResourceId ID kontrolki TextView
+     * @param objects Obiekty do zwizualizowania w Adapterze.
+     */
     public AuthorsAdapter(Context context, int textViewResourceId,
                           List<String> objects)
     {
         super(context, textViewResourceId, objects);
     }
 
+    /**
+     * Wydarza się, gdy system zechce utworzyć pojedynczy element
+     * kontrolki ListView.
+     * Ta funkcja służy za twórcę elementu prezentującego Autora bazując
+     * na skonfigurowanym przez programistę modelu kontrolki.
+     * @param position Który element z listy jest aktualnie tworzony.
+     * @param convertView Kontrolka listy.
+     * @param parent Rodzic kontrolki.
+     * @return Utworzona kontrolka, wypełniona.
+     */
     @Override public View getView(int position, View convertView, ViewGroup parent)
     {
         if (convertView == null)

@@ -1,10 +1,14 @@
 package pl.edu.uwb.mobiuwb.interfaces;
 
 /**
- * Created by Tunczyk on 2015-05-01.
+ * Opisuje wydarzenia związane ze zmianą wartości.
  */
 public interface OnValueChangedListener<T>
 {
+    /**
+     * Wydarza się, gdy zmienimy wartość.
+     * @param oldValue Stara wartość.
+     * @param newValue Nowa wartość.
+     */
     void notifyChanged(T oldValue, T newValue);
-    //void preValueChanged(T oldValue,T newValue);
 }

@@ -1,9 +1,12 @@
 package pl.edu.uwb.mobiuwb.utillities;
 
 /**
- * Created by sennajavie on 2015-04-30.
+ * Zbiór przydatnych zmiennych globalnych.
  */
 public class Globals
 {
+    /**
+     * Tag aplikacyjny, używany m.in. w debugowaniu.
+     */
     public static final String MOBIUWB_TAG = "MobiUwB";
 }

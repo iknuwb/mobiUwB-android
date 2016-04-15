@@ -21,17 +21,39 @@ import pl.edu.uwb.mobiuwb.VersionControl.Models.VersioningResult;
 import pl.edu.uwb.mobiuwb.io.IoManager;
 
 /**
- * Created by sennajavie on 2015-06-01.
+ * Jest to kontroler wersji pliku.
+ * Podstawowym jego zadaniem jest zapewnienie korzystającego, że plik jest
+ * w najnowszej możliwej wersji.
  */
 public class VersionController
 {
+    /**
+     * Preferencje systemu operacyjnego Android.
+     */
     private SharedPreferences shareds;
 
+    /**
+     * Inicjalizuje zmienne.
+     * @param shareds Preferencje systemu operacyjnego Android.
+     */
     public VersionController(SharedPreferences shareds)
     {
         this.shareds = shareds;
     }
 
+    /**
+     * Metoda ta pobiera możliwie najnowszy plik, niezależnie od tego,
+     * czy znajduje się on lokalnie na urządzeniu czy też w Internecie.
+     * Jeżeli w Internecie znajduje się jego nowsza wersja, pobiera go
+     * po czym wysyła na wyjście (w tym przypadku wypełnia nim zmienną w
+     * danych wyjściowych). Jeżeli z kolei jego nowsza wersja znajduje się
+     * lokalnie na urządzeniu, to po prostu czyta ją i to nią wypełnia
+     * zmienną wyjściową.
+     * @param versioningRequest Wejściowy obiekt żądania kontroli wersji.
+     *                          Zawiera wszelkie niezbędne startowe dane.
+     * @return Rezultat funkcji, zawierający dane o najnowszej możliwej
+     * wersji zwracanego pliku.
+     */
     public VersioningResult getNewestFile(VersioningRequest versioningRequest)
     {
         VersioningResult result = new VersioningResult();
@@ -65,6 +87,12 @@ public class VersionController
         return result;
     }
 
+    /**
+     * Metoda ta pobiera plik z Internetu.
+     * @param versioningRequest Wejściowe dane.
+     * @throws IOException Gdy wystąpi błąd zapisu/odczytu.
+     * @throws ParseException Gdy wystąpi błąd z analizą pliku.
+     */
     private void downloadFile(VersioningRequest versioningRequest)
             throws IOException, ParseException
     {
@@ -80,6 +108,15 @@ public class VersionController
         editor.commit();
     }
 
+    /**
+     * Ta metoda sprawdza, czy plik obecny w Internecie nie nadaje się do pobrania.
+     * Innymi słowy, czy ma starszą wersję.
+     * Wszystko determinuje data modyfikacji.
+     * @param versioningRequest Wejściowe dane.
+     * @return Czy plik w Internecie ma starszą datę niż lokalny.
+     * @throws IOException Gdy wystąpi błąd zapisu/odczytu.
+     * @throws ParseException Gdy wystąpi błąd z analizą pliku.
+     */
     private Boolean checkIfIsCurrent(VersioningRequest versioningRequest)
             throws IOException, ParseException
     {
@@ -104,6 +141,15 @@ public class VersionController
         }
     }
 
+    /**
+     * Pobiera datę modyfikacji pliku obecnego w Internecie.
+     * W przypadku nieobecnej informacji o dacie modyfikacji,
+     * zwracana jest pierwsza możliwa data.
+     * @param versioningRequest Wejściowe dane.
+     * @return Data modyfikacji.
+     * @throws IOException Gdy wystąpi błąd zapisu/odczytu.
+     * @throws ParseException Gdy wystąpi błąd z analizą pliku.
+     */
     private Date getInternetFileModificationDate(VersioningRequest versioningRequest)
             throws IOException, ParseException
     {
@@ -124,7 +170,12 @@ public class VersionController
                 internetFileModificationDateString);
     }
 
-
+    /**
+     * Wypełnia informacje zwrotne danymi pliku.
+     * @param versioningRequest Wejściowe dane.
+     * @param result Dane zwrotne, z wypełnionymi informacjami o pliku.
+     * @throws IOException Gdy wystąpi błąd zapisu/odczytu.
+     */
     private void FillResultWithLocalFile(
             VersioningRequest versioningRequest,
             VersioningResult result)

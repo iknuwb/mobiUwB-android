@@ -7,10 +7,17 @@ import pl.edu.uwb.mobiuwb.MobiUwbApp;
 import java.util.Date;
 
 /**
- * Created by sennajavie on 2015-05-03.
+ * Enkapsuluje w sobie działania walidacyjne elementów ekranu
+ * Opcji/Ustawień.
  */
 public class SettingsValidator
 {
+    /**
+     * Waliduje, czy from jest na pewno mniejsze od to.
+     * @param newValueFrom Data from.
+     * @param newValueTo Data to.
+     * @return True, jeżeli from > to, false jeżeli nie
+     */
     public static boolean validateTime(
             Date newValueFrom,
             Date newValueTo)

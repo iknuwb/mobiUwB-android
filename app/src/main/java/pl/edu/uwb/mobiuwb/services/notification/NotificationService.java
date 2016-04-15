@@ -40,17 +40,47 @@ import pl.edu.uwb.mobiuwb.tasks.TasksQueue;
 import pl.edu.uwb.mobiuwb.view.splash.SplashScreenActivity;
 
 /**
- * Created by sennajavie on 2015-06-01.
+ * Jest to usługa obsługująca Powiadomienia w aplikacji.
+ * Jako oddzielny proces, działa ona w tle wtedy, kiedy aplikacja jest
+ * wyłączona. Dane są pozyskiwane poprzez deserializację
+ * wcześniej zserializowanych danych w samej aplikacji.
  */
 public class NotificationService extends Service
 {
+    /**
+     * Flaga oznaczająca "ładuj ponownie konfigurację".
+     */
     public static final int RELOAD_CONFIGURATION = 0;
+
+    /**
+     * Flaga oznaczająca "restartuj usługę".
+     */
     public static final int RESTART = 1;
+
+    /**
+     * Flaga oznaczająca "stop usłudze".
+     */
     public static final int STOP = 2;
+
+    /**
+     * Flaga oznaczająca "wystartuj usługę".
+     */
     public static final int START = 3;
 
+    /**
+     * Wątek wewnętrzny usługi.
+     */
     private ServiceTask serviceTask;
 
+    /**
+     * Wydarza się gdy wydajemy jakąś komendę usłudze.
+     * Konfigurujemy co usługa ma zrobić za pomocą flag.
+     * @param intent Intencja wchodząca w tą usługę.
+     * @param flags Flagi do kontroli usługi.
+     * @param startId Startowe ID, nieużywany parametr.
+     * @return Zawsze zwraca flagę, która informuje system operacyjny,
+     * że ta usługa powinna zostać ponownie uruchamiana w przyszłości.
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
@@ -67,6 +97,10 @@ public class NotificationService extends Service
         return Service.START_STICKY;
     }
 
+    /**
+     * Przetwarza żądanie bazując na flagach.
+     * @param flag Wejściowa flaga.
+     */
     private void parseRequest(int flag)
     {
         switch(flag)
@@ -106,38 +140,80 @@ public class NotificationService extends Service
     }
 
 
+    /**
+     * Wewnętrzna metoda systemu Android, nieużywana.
+     * @param intent
+     * @return
+     */
     @Override
     public IBinder onBind(Intent intent)
     {
         return null;
     }
 
-
+    /**
+     * Wydarza się, gdy usługa kończy swoje działanie.
+     * Stopowany jest wtedy wątek wewnętrzny usługi.
+     */
     @Override public void onDestroy()
     {
         super.onDestroy();
         serviceTask.cancel(true);
     }
 
+    /**
+     * Jest to wątek wewnętrzny usługi, który zapewnia asynchroniczne działanie,
+     * oraz możliwość łatwego włączenia lub wyłączenia operacji bez
+     * zabijania całej usługi.
+     * Do jego zadań należy wysyłanie notyfikacji.
+     */
     private class ServiceTask extends AsyncTask<Void, Void, Void>
     {
+        /**
+         * Determinuje, czy jest aktywny.
+         */
         private boolean active;
 
+        /**
+         * Uogólniony obiekt zawierający dane zwracane przez listę zadań.
+         */
         private DataInitializeTaskOutput dataInitializeTaskOutput;
+
+        /**
+         * Kiedy ostatnio wysyłaliśmy notyfikacje.
+         */
         private long lastCheckTime = 0;
+
+        /**
+         * Aktualny czas.
+         */
         private long currentTime = 0;
 
+        /**
+         * Stopuje ten proces.
+         */
         public void stopBackgroundProcess()
         {
             active = false;
         }
 
+        /**
+         * Wydarza się tuż przed startem tego procesu.
+         */
         @Override protected void onPreExecute()
         {
             active = true;
             super.onPreExecute();
         }
 
+        /**
+         * Dzieje się w oddzielnym wątku.
+         * Wywołuje wszelkie operacje związane z dostarczeniem
+         * powiadomienia użytkownikowi.
+         * Ponadto wywołuje inicjalizację danych.
+         * @param params Nieużywane parametry.
+         * @return Nieużywana wartość zwracana.
+         */
         @Override protected Void doInBackground(Void... params)
         {
             boolean succeeded = InitializeData();
@@ -145,6 +221,10 @@ public class NotificationService extends Service
             return null;
         }
 
+        /**
+         * Sprawdza, czy aplikacja może generować powiadomienia, czy też nie.
+         * @param succeeded Czy generować powiadomienia, czy też nie.
+         */
         private void processNotifications(boolean succeeded)
         {
             if(dataInitializeTaskOutput.isNotificationActive &&
@@ -154,6 +234,9 @@ public class NotificationService extends Service
             }
         }
 
+        /**
+         * Enkapsuluje podstawową pętlę generującą powiadomienia.
+         */
         private void notificationsLoop()
         {
             long interval = dataInitializeTaskOutput.interval;
@@ -165,6 +248,13 @@ public class NotificationService extends Service
             }
         }
 
+        /**
+         * Pojedyncze wywołanie pętli generującej powiadomienia.
+         * Sprawdza warunki odnośnie odstępu od wywołania kolejnych powiadomień.
+         * @param interval Przerwa między powiadomieniami.
+         * @param from Czas "od" w zakresie czasu.
+         * @param to Czas "do" w zakresie czasu.
+         */
         private void notificationsLoopTick(long interval, Date from, Date to)
         {
             currentTime = System.currentTimeMillis();
@@ -189,12 +279,21 @@ public class NotificationService extends Service
             }
         }
 
+        /**
+         * Metoda ta uruchamia metodę od powiadomień.
+         */
         private void notificationsExecute()
         {
             lastCheckTime = currentTime;
             runNotificationsPublisher();
         }
 
+        /**
+         * Metoda ta uruchamia metodę od powiadomień, are pod warunkami
+         * zakresu czasu, w jakim użytkownik chciałby otrzymywać powiadomienia.
+         * @param from Czas "od" w zakresie czasu.
+         * @param to Czas "do" w zakresie czasu.
+         */
         private void timeRangeNotificationsExecute(Date from, Date to)
         {
             Date currentDate = new Date(currentTime);
@@ -221,6 +320,14 @@ public class NotificationService extends Service
             }
         }
 
+        /**
+         * Metoda ta wykonuje dalsze porównania warunków czasu, po czym
+         * uruchamia wykonywacza notyfikacji.
+         * @param current Aktualny czas.
+         * @param from Czas "od" w zakresie czasu.
+         * @param to Czas "do" w zakresie czasu.
+         */
+
         private void notificationsTimeRangeCheck(int current, int from, int to)
         {
             if (from <= current &&
@@ -230,10 +337,17 @@ public class NotificationService extends Service
             }
         }
 
-
+        /**
+         * Metoda ta publikuje notyfikacje.
+         * Robi to dla konkretnych kategorii i sprawdza, czy użytkownich chciał,
+         * aby dla danej kategorii otrzymać powiadomienie.
+         * Następnie metoda pobiera aktualną sekcję i dla niej pobiera listę
+         * kanałów informacyjnych, po czym uruchamia dla danego kanału powiadomienia.
+         */
         private void runNotificationsPublisher()
         {
-            UniversityUnit unit = dataInitializeTaskOutput.configXmlResult.getCurrentUniversityUnit();
+            UniversityUnit unit = dataInitializeTaskOutput.
+                    configXmlResult.getCurrentUniversityUnit();
             int i = 0;
             for (Map.Entry<String, Boolean> category :
                     dataInitializeTaskOutput.categories.entrySet())
@@ -253,11 +367,24 @@ public class NotificationService extends Service
                             category.getKey(),
                             new Date());
                 }
-
                 i++;
             }
         }
 
+        /**
+         * Metoda ta pobiera zawsze najnowszy plik JSON z kanałami informacyjnymi,
+         * aby wydobyć z niego interesujące użytkownika kanały informacyjne.
+         * Aby to zrealizować, operuje ona na preferencjeach aplikacji w celu pobrania plików
+         * za pomocą kontrolera wersji.
+         * Następnie ten plik JSON pobrany kontrolerem wersji jest analizowany.
+         * Wydobywana jest z niego informacja o interesujących użytkownika kanałach i to one
+         * są zwracane przez metode. Interesujący kanał jest determinowany przez jego datę wydania.
+         * Jeżeli jest nowy, to zostaje zwrócony przez metodę.
+         * @param section Sekcja, dla której należy pozyskać interesujące kanały.
+         * @param unit Jednostka na Uniwersytecie w Białymstoku.
+         * @return Kanały informacyjne, które jeszcze nie zostały pokazane przez aplikacje
+         * i są one nowe.
+         */
         private List<Feed> getNewElements(Section section, UniversityUnit unit)
         {
             List<Feed> notificationElements = new ArrayList<Feed>();
@@ -316,6 +443,12 @@ public class NotificationService extends Service
             return newestFeeds;
         }
 
+        /**
+         * Funkcja ta inicjalizuje wszelkie dane niezbędne dla procesu generowania powiadomień.
+         * Pobiera ona pliki Konfiguracja, Właściwości, oraz ustawienia z aplikacji, jakie są
+         * wymagane do działania niniejszego generatora powiadomień.
+         * @return Czy inicjalizacja się powiodła.
+         */
         private boolean InitializeData()
         {
             TasksQueue<DataInitializeTaskOutput> tasksQueue =
@@ -342,8 +475,6 @@ public class NotificationService extends Service
 
             ConfigurationXmlTask configurationXmlTask = new ConfigurationXmlTask();
             tasksQueue.add(configurationXmlTask, null);
-
-
             SettingsPreferenceManagerTask settingsPreferenceManagerTask =
                 new SettingsPreferenceManagerTask();
             SettingsPreferenceManagerTaskInput settingsPreferenceManagerTaskInput =
@@ -357,6 +488,15 @@ public class NotificationService extends Service
             return dataInitializeTaskOutput.isValid();
         }
 
+        /**
+         * Metoda ta wysyła żądane powiadomienia bazując na liście kanałów informacyjnych Feed.
+         * Buduje je oraz przygotowuje, nadając tytuł oraz ikonę.
+         * Czyni to dla konkretnej sekcji, z konkretnym ID notyfikacji aby się one nie podwajały.
+         * @param newestFeeds Kanały informacyjne, dla których należy wywołać powiadomienie.
+         * @param section Sekcja, dla której wysyłane jest dane powiadomienie
+         * @param notificationId ID notyfikacji, unikalne per sekcja, aby się nie podwajały tylko
+         *                       zastępowały.
+         */
         private void publishNotifications(List<Feed> newestFeeds,
                                           Section section,
                                           int notificationId)

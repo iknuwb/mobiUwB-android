@@ -226,7 +226,7 @@ public class StartupConfig
         WiFiChecker wifiChecker = new WiFiChecker();
 
         mobileAvailable = mobileChecker.isAvailable();
-        wiFiAvailable =wifiChecker.isAvailable();
+        wiFiAvailable = wifiChecker.isAvailable();
     }
 
     /**

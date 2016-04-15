@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import pl.edu.uwb.mobiuwb.R;
@@ -82,6 +83,7 @@ public class MainActivityFragment extends Fragment implements GuiAccess
 
         mainWebView.setBackgroundColor(0);
         mainWebView.setWebViewClient(mobiUwbWebViewClient);
+        enableHTML5AppCache();
         mainWebView.getSettings().setJavaScriptEnabled(true);
         String url = StartupConfig.
                 propertiesXmlResult.
@@ -91,6 +93,18 @@ public class MainActivityFragment extends Fragment implements GuiAccess
 
         syncCookie(url);
         mainWebView.loadUrl(url);
+    }
+
+    /**
+     * Ustawia opcje cachowania i włącza cache HTML5.
+     * Dzięki temu, w przypadku braku połączenia z internetem,
+     * możliwe jest korzystanie z już wcześniej zapisanych danych.
+     */
+    private void enableHTML5AppCache()
+    {
+        mainWebView.getSettings().setAppCacheMaxSize(1024*1024*25);
+        mainWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        mainWebView.getSettings().setAppCacheEnabled(true);
     }
 
     /**

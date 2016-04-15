@@ -79,7 +79,7 @@ public class MobiUwBWebViewClient extends WebViewClient
     }
 
     /**
-     * Inicjalizuje okieno z postępem. Nadaje mu tytuł oraz fakt, że
+     * Inicjalizuje okienko z postępem. Nadaje mu tytuł oraz fakt, że
      * użytkownik nie może go wyłączyć.
      * @param context Kontekst widoku lub aplikacji.
      */
@@ -90,7 +90,6 @@ public class MobiUwBWebViewClient extends WebViewClient
             progressDialog = new ProgressDialog(
                     context,
                     AlertDialog.THEME_HOLO_DARK);
-
             progressDialog.setCancelable(false);
             progressDialog.setMessage(context.getString(
                     R.string.dialog_load_webiste_message));

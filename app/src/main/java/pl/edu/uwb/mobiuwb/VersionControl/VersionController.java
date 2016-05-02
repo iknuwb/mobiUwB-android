@@ -131,14 +131,7 @@ public class VersionController
                         defaultLongDate);
         Date lastDate = new Date(lastDateLong);
 
-        if(lastDate.before(internetFileModificationDate))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return !lastDate.before(internetFileModificationDate);
     }
 
     /**

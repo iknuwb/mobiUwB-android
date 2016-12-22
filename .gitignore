@@ -1,10 +1,20 @@
 
-# Created by https://www.gitignore.io/api/android,jetbrains,netbeans,sublimetext,emacs,linux,kate,vim,windows,notepadpp,osx,textmate
+# Created by https://www.gitignore.io/api/android,jetbrains,intellij,netbeans,sublimetext,emacs,linux,kate,vim,windows,notepadpp,osx,textmate
 
-### Kate ###
-# Swap Files #
-.*.kate-swp
-.swp.*
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 
 ### Android ###
@@ -58,6 +68,56 @@ captures/
 gen-external-apklibs
 
 
+### Intellij ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff:
+
+# Sensitive or high-churn files:
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+
+# Gradle:
+.idea/gradle.xml
+
+# Mongo Explorer plugin:
+.idea/mongoSettings.xml
+
+## File-based project format:
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+### Intellij Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+
+# *.iml
+# modules.xml
+# .idea/misc.xml
+# *.ipr
+
+
 ### NetBeans ###
 nbproject/private/
 nbbuild/
@@ -98,7 +158,6 @@ GitHub.sublime-settings
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
-*~
 \#*\#
 /.emacs.desktop
 /.emacs.desktop.lock
@@ -143,21 +202,6 @@ flycheck_*.el
 .dir-locals.el
 
 
-### Linux ###
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
-.nfs*
-
-
 ### JetBrains ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -165,39 +209,22 @@ flycheck_*.el
 # User-specific stuff:
 
 # Sensitive or high-churn files:
-.idea/dataSources/
-.idea/dataSources.ids
-.idea/dataSources.xml
-.idea/dataSources.local.xml
-.idea/sqlDataSources.xml
-.idea/dynamic.xml
-.idea/uiDesigner.xml
 
 # Gradle:
-.idea/gradle.xml
 
 # Mongo Explorer plugin:
-.idea/mongoSettings.xml
 
 ## File-based project format:
-*.iws
 
 ## Plugin-specific files:
 
 # IntelliJ
-/out/
 
 # mpeltonen/sbt-idea plugin
-.idea_modules/
 
 # JIRA plugin
-atlassian-ide-plugin.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
 
 ### JetBrains Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
@@ -206,6 +233,12 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml
 # *.ipr
+
+
+### Kate ###
+# Swap Files #
+.*.kate-swp
+.swp.*
 
 
 ### Vim ###
@@ -279,4 +312,4 @@ Temporary Items
 *.tmproject
 tmtags
 
-# End of https://www.gitignore.io/api/android,jetbrains,netbeans,sublimetext,emacs,linux,kate,vim,windows,notepadpp,osx,textmate
+# End of https://www.gitignore.io/api/android,jetbrains,intellij,netbeans,sublimetext,emacs,linux,kate,vim,windows,notepadpp,osx,textmate

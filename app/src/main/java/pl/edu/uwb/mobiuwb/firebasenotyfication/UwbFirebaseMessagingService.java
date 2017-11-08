@@ -1,4 +1,4 @@
-package pl.edu.uwb.mobiuwb.firebaseNotyfication;
+package pl.edu.uwb.mobiuwb.firebasenotyfication;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

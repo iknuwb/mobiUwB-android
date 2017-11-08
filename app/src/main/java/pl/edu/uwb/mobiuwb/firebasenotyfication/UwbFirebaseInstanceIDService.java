@@ -1,4 +1,4 @@
-package pl.edu.uwb.mobiuwb.firebaseNotyfication;
+package pl.edu.uwb.mobiuwb.firebasenotyfication;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;

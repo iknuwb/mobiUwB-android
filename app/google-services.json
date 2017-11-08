@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "18290785104",
+    "firebase_url": "https://mobiuwb-66c56.firebaseio.com",
+    "project_id": "mobiuwb-66c56",
+    "storage_bucket": "mobiuwb-66c56.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18290785104:android:045bd5c75c33675c",
+        "android_client_info": {
+          "package_name": "pl.edu.uwb.mobiuwb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18290785104-3r75oh7fk2ktj2ckfbr6itb1vffn947q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo0Bi5Xx_P1FCftnslmH8_QtivcRlDQeQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
